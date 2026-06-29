@@ -1,0 +1,117 @@
+# Default System Roles Configuration
+# 
+# This file is used ONLY during bootstrap to initialize the database with default roles.
+# After bootstrap, the database becomes the source of truth for all role and permission data.
+# 
+# DO NOT modify this file to change roles in production. Use the Role Management UI instead.
+# 
+# Bootstrap Process:
+# 1. Read this file on first application startup
+# 2. Create roles defined below
+# 3. Create permissions defined in role permissions
+# 4. Create role-permission mappings
+# 5. Mark bootstrap complete
+# 6. Database becomes source of truth
+
+roles:
+  - name: Administrator
+    description: Full system access with all permissions
+    is_system: true
+    is_enabled: true
+    permissions:
+      - "*"  # Global wildcard for all permissions
+
+  - name: Sales
+    description: Sales team access for customer and order management
+    is_system: true
+    is_enabled: true
+    permissions:
+      - customer.view
+      - customer.create
+      - customer.edit
+      - customer.list
+      - customer.history
+      - order.view
+      - order.create
+      - order.edit
+      - order.list
+      - order.history
+      - pricing.view
+      - pricing.history
+      - invoice.view
+      - invoice.list
+      - invoice.history
+
+  - name: Warehouse
+    description: Warehouse operations for inventory and shipping
+    is_system: true
+    is_enabled: true
+    permissions:
+      - warehouse.view
+      - warehouse.dispatch
+      - warehouse.receive
+      - warehouse.inventory
+      - warehouse.adjust
+      - warehouse.history
+      - shipment.view
+      - shipment.create
+      - shipment.edit
+      - shipment.complete
+      - shipment.track
+      - shipment.history
+      - order.view
+      - order.list
+      - order.history
+
+  - name: Finance
+    description: Finance team access for invoicing and pricing
+    is_system: true
+    is_enabled: true
+    permissions:
+      - customer.view
+      - customer.list
+      - customer.history
+      - order.view
+      - order.list
+      - order.history
+      - pricing.view
+      - pricing.edit
+      - pricing.history
+      - pricing.approve
+      - pricing.export
+      - invoice.view
+      - invoice.issue
+      - invoice.edit
+      - invoice.list
+      - invoice.approve
+      - invoice.history
+      - invoice.export
+      - report.view
+      - report.create
+      - report.edit
+      - report.export
+
+  - name: Manager
+    description: Manager access with oversight across multiple domains
+    is_system: true
+    is_enabled: true
+    permissions:
+      - customer.*
+      - order.*
+      - pricing.view
+      - pricing.history
+      - invoice.view
+      - invoice.list
+      - invoice.history
+      - warehouse.view
+      - warehouse.inventory
+      - warehouse.history
+      - shipment.view
+      - shipment.track
+      - shipment.history
+      - report.view
+      - report.export
+      - user.view
+      - user.list
+      - role.view
+      - role.list
