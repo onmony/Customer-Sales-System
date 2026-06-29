@@ -4,23 +4,35 @@
 
 Invoice formalizes the amount charged for an order and preserves an immutable business record.
 
+The Invoice module exists so a saved order can become a durable commercial document without losing the customer, product, quantity, and pricing context used at the time of issue.
+
 ## Scope
 
-Phase 1 documents invoice creation from saved orders, invoice immutability, invoice snapshots, and tenant isolation.
+Invoice V1 covers invoice creation from saved orders, invoice item snapshot preservation, invoice issue behavior, issued invoice immutability, invoice readiness dependency on Order, and tenant isolation.
+
+This package is documentation only. It does not contain implementation.
 
 ## Business Rules
 
-- An invoice belongs to one tenant.
+Business rules are defined in [Invoice V1](VERSIONS/V1.md). They are summarized here for navigation:
+
+- Each invoice belongs to exactly one tenant.
 - An invoice is created from a saved order.
-- An invoice must preserve customer, product, quantity, and pricing snapshots from the order.
+- The source order must be invoice-ready.
+- Invoice items preserve required customer, product, quantity, and pricing snapshots.
 - An issued invoice is immutable.
-- Invoice history must not be rewritten by later customer, product, or pricing changes.
+- Later customer, product, pricing, or order changes must not rewrite an issued invoice.
+- Cross-tenant invoice access is forbidden.
 
 ## Entities
 
+- Tenant
 - Invoice
 - Invoice item
 - Invoice snapshot
+- Invoice customer snapshot
+- Invoice product snapshot
+- Invoice pricing snapshot
 - Order
 - Customer
 
@@ -30,18 +42,40 @@ Phase 1 documents invoice creation from saved orders, invoice immutability, invo
 - An invoice has many invoice items.
 - Invoice items derive from order items.
 - An invoice belongs to one customer through the source order.
+- An invoice item preserves order item snapshot context.
+
+## User Journey
+
+1. A user opens a saved order.
+2. The system checks whether the order is invoice-ready.
+3. The user creates an invoice from the saved order.
+4. Invoice items preserve required order snapshots.
+5. The user reviews the invoice.
+6. The invoice is issued.
+7. The issued invoice becomes immutable.
+
+## Documentation Order
+
+The package follows the required order:
+
+1. [Business Rules](VERSIONS/V1.md)
+2. [Decision Tables](DECISION_TABLES.md)
+3. [Gherkin Scenarios](invoice.feature)
+4. [API Specification](API.md)
+5. [UI Specification](UI.md)
+6. [Checklist](CHECKLIST.md)
+7. [Test Cases](TEST_CASES.md)
+8. [Evolution](VERSIONS/EVOLUTION.md)
 
 ## Open Questions
 
-- What are the required invoice statuses in Phase 1?
-- Can a draft invoice exist?
-- What is the cancellation or credit-note policy?
-- What invoice numbering rule is required?
+Open questions are tracked in [Invoice V1](VERSIONS/V1.md#open-questions). Do not invent answers during implementation.
 
 ## Package Contents
 
 - [Skill](SKILL.md)
-- [V1](VERSIONS/V1.md)
+- [V1 Business Rules](VERSIONS/V1.md)
+- [Evolution](VERSIONS/EVOLUTION.md)
 - [Decision Tables](DECISION_TABLES.md)
 - [Gherkin](invoice.feature)
 - [API](API.md)
@@ -51,8 +85,12 @@ Phase 1 documents invoice creation from saved orders, invoice immutability, invo
 
 ## Related Documents
 
+- [Master Skill](../../MASTER_SKILL.md)
+- [Vision](../../VISION.md)
+- [Rules](../../RULES.md)
+- [Principles](../../PRINCIPLES.md)
+- [Domain](../../DOMAIN.md)
 - [Order](../order/README.md)
 - [Pricing](../pricing/README.md)
 - [Customer](../customer/README.md)
 - [Product](../product/README.md)
-
