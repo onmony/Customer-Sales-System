@@ -1,0 +1,136 @@
+# Demo Data Configuration
+# 
+# This file provides demo data for development and testing environments.
+# This is NOT used in production.
+# 
+# Bootstrap Process:
+# 1. Read this file only if demo mode is enabled
+# 2. Create demo customers, products, and pricing
+# 3. Mark demo data loaded
+
+demo_customers:
+  - name: Aarav Retail Mart
+    code: ARM001
+    contact_email: contact@aaravretail.com
+    contact_phone: "+91-9876543210"
+    billing_address:
+      street: "123 Main Street"
+      city: "Mumbai"
+      state: "Maharashtra"
+      postal_code: "400001"
+      country: "India"
+    shipping_address:
+      street: "123 Main Street"
+      city: "Mumbai"
+      state: "Maharashtra"
+      postal_code: "400001"
+      country: "India"
+    credit_limit:
+      amount: 500000
+      currency: "INR"
+    preferred_warehouse: "MUM-WH-01"
+    preferred_transport: "standard"
+  
+  - name: Bhavya Electronics
+    code: BE001
+    contact_email: info@bhavyaelectronics.com
+    contact_phone: "+91-9876543211"
+    billing_address:
+      street: "456 Tech Park"
+      city: "Bangalore"
+      state: "Karnataka"
+      postal_code: "560001"
+      country: "India"
+    shipping_address:
+      street: "456 Tech Park"
+      city: "Bangalore"
+      state: "Karnataka"
+      postal_code: "560001"
+      country: "India"
+    credit_limit:
+      amount: 1000000
+      currency: "INR"
+    preferred_warehouse: "BLR-WH-01"
+    preferred_transport: "express"
+
+demo_products:
+  - name: Wireless Mouse
+    code: WM-001
+    category: "Electronics"
+    description: "Wireless optical mouse with USB receiver"
+    unit_of_measure: "PCS"
+    base_price:
+      amount: 500
+      currency: "INR"
+    weight: 0.1
+    dimensions: "10x5x3 cm"
+    tax_rate: 18
+  
+  - name: USB Keyboard
+    code: UK-001
+    category: "Electronics"
+    description: "Standard USB keyboard"
+    unit_of_measure: "PCS"
+    base_price:
+      amount: 800
+      currency: "INR"
+    weight: 0.5
+    dimensions: "45x15x5 cm"
+    tax_rate: 18
+  
+  - name: 27-inch Monitor
+    code: MON-027
+    category: "Electronics"
+    description: "27-inch LED monitor with Full HD resolution"
+    unit_of_measure: "PCS"
+    base_price:
+      amount: 15000
+      currency: "INR"
+    weight: 5.0
+    dimensions: "65x45x10 cm"
+    tax_rate: 18
+  
+  - name: Laptop Stand
+    code: LS-001
+    category: "Accessories"
+    description: "Adjustable aluminum laptop stand"
+    unit_of_measure: "PCS"
+    base_price:
+      amount: 2000
+      currency: "INR"
+    weight: 1.5
+    dimensions: "30x25x5 cm"
+    tax_rate: 18
+
+demo_pricing:
+  - customer_code: ARM001
+    product_code: WM-001
+    price:
+      amount: 450
+      currency: "INR"
+    effective_date: "2026-01-01"
+    minimum_quantity: 1
+  
+  - customer_code: ARM001
+    product_code: UK-001
+    price:
+      amount: 750
+      currency: "INR"
+    effective_date: "2026-01-01"
+    minimum_quantity: 1
+  
+  - customer_code: BE001
+    product_code: MON-027
+    price:
+      amount: 14000
+      currency: "INR"
+    effective_date: "2026-01-01"
+    minimum_quantity: 10
+  
+  - customer_code: BE001
+    product_code: MON-027
+    price:
+      amount: 13500
+      currency: "INR"
+    effective_date: "2026-01-01"
+    minimum_quantity: 50

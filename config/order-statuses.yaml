@@ -1,0 +1,65 @@
+# Order Statuses Configuration
+# 
+# This file provides default order statuses for the application.
+# On first startup, these are bootstrapped into the database.
+# After bootstrap, the database becomes the source of truth.
+# 
+# Order statuses define the workflow states for orders.
+# Statuses can be customized per tenant in Phase 3.
+
+order_statuses:
+  - code: draft
+    name: Draft
+    description: Order is being created and not yet submitted
+    is_initial: true
+    is_terminal: false
+    color: "#6C757D"
+  
+  - code: pending
+    name: Pending
+    description: Order is submitted and awaiting confirmation
+    is_initial: false
+    is_terminal: false
+    color: "#FFC107"
+  
+  - code: confirmed
+    name: Confirmed
+    description: Order is confirmed and ready for processing
+    is_initial: false
+    is_terminal: false
+    color: "#17A2B8"
+  
+  - code: processing
+    name: Processing
+    description: Order is being processed by warehouse
+    is_initial: false
+    is_terminal: false
+    color: "#007BFF"
+  
+  - code: shipped
+    name: Shipped
+    description: Order has been shipped to customer
+    is_initial: false
+    is_terminal: false
+    color: "#28A745"
+  
+  - code: delivered
+    name: Delivered
+    description: Order has been delivered to customer
+    is_initial: false
+    is_terminal: true
+    color: "#28A745"
+  
+  - code: cancelled
+    name: Cancelled
+    description: Order has been cancelled
+    is_initial: false
+    is_terminal: true
+    color: "#DC3545"
+  
+  - code: on_hold
+    name: On Hold
+    description: Order is on hold pending resolution
+    is_initial: false
+    is_terminal: false
+    color: "#FD7E14"

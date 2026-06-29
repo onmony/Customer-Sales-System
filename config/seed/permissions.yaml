@@ -1,0 +1,317 @@
+# Default System Permissions Configuration
+# 
+# This file is used ONLY during bootstrap to initialize the database with default permissions.
+# After bootstrap, the database becomes the source of truth for all permission data.
+# 
+# DO NOT modify this file to change permissions in production. Use the Role Management UI instead.
+# 
+# Bootstrap Process:
+# 1. Read this file on first application startup
+# 2. Create permissions defined below
+# 3. Mark bootstrap complete
+# 4. Database becomes source of truth
+
+permissions:
+  # Customer Permissions
+  - name: customer.view
+    description: View customer details
+    domain: customer
+  
+  - name: customer.create
+    description: Create new customers
+    domain: customer
+  
+  - name: customer.edit
+    description: Edit customer details
+    domain: customer
+  
+  - name: customer.delete
+    description: Delete customers
+    domain: customer
+  
+  - name: customer.list
+    description: List customers
+    domain: customer
+  
+  - name: customer.history
+    description: View customer history
+    domain: customer
+  
+  # Product Permissions
+  - name: product.view
+    description: View product details
+    domain: product
+  
+  - name: product.create
+    description: Create new products
+    domain: product
+  
+  - name: product.edit
+    description: Edit product details
+    domain: product
+  
+  - name: product.delete
+    description: Delete products
+    domain: product
+  
+  - name: product.list
+    description: List products
+    domain: product
+  
+  - name: product.history
+    description: View product history
+    domain: product
+  
+  # Order Permissions
+  - name: order.view
+    description: View order details
+    domain: order
+  
+  - name: order.create
+    description: Create new orders
+    domain: order
+  
+  - name: order.edit
+    description: Edit order details (before confirmation)
+    domain: order
+  
+  - name: order.delete
+    description: Delete orders (before confirmation)
+    domain: order
+  
+  - name: order.list
+    description: List orders
+    domain: order
+  
+  - name: order.history
+    description: View order history
+    domain: order
+  
+  - name: order.confirm
+    description: Confirm orders
+    domain: order
+  
+  - name: order.cancel
+    description: Cancel orders
+    domain: order
+  
+  # Pricing Permissions
+  - name: pricing.view
+    description: View pricing details
+    domain: pricing
+  
+  - name: pricing.create
+    description: Create pricing rules
+    domain: pricing
+  
+  - name: pricing.edit
+    description: Edit pricing rules
+    domain: pricing
+  
+  - name: pricing.delete
+    description: Delete pricing rules
+    domain: pricing
+  
+  - name: pricing.history
+    description: View pricing history
+    domain: pricing
+  
+  - name: pricing.approve
+    description: Approve pricing changes
+    domain: pricing
+  
+  - name: pricing.export
+    description: Export pricing data
+    domain: pricing
+  
+  # Invoice Permissions
+  - name: invoice.view
+    description: View invoice details
+    domain: invoice
+  
+  - name: invoice.create
+    description: Create invoices
+    domain: invoice
+  
+  - name: invoice.edit
+    description: Edit invoice details (before issuance)
+    domain: invoice
+  
+  - name: invoice.delete
+    description: Delete invoices (before issuance)
+    domain: invoice
+  
+  - name: invoice.list
+    description: List invoices
+    domain: invoice
+  
+  - name: invoice.history
+    description: View invoice history
+    domain: invoice
+  
+  - name: invoice.issue
+    description: Issue invoices to customers
+    domain: invoice
+  
+  - name: invoice.approve
+    description: Approve invoices
+    domain: invoice
+  
+  - name: invoice.export
+    description: Export invoice data
+    domain: invoice
+  
+  # Warehouse Permissions
+  - name: warehouse.view
+    description: View warehouse details
+    domain: warehouse
+  
+  - name: warehouse.dispatch
+    description: Dispatch warehouse requests
+    domain: warehouse
+  
+  - name: warehouse.receive
+    description: Receive goods into warehouse
+    domain: warehouse
+  
+  - name: warehouse.inventory
+    description: View inventory levels
+    domain: warehouse
+  
+  - name: warehouse.adjust
+    description: Adjust inventory levels
+    domain: warehouse
+  
+  - name: warehouse.history
+    description: View warehouse history
+    domain: warehouse
+  
+  # Shipment Permissions
+  - name: shipment.view
+    description: View shipment details
+    domain: shipment
+  
+  - name: shipment.create
+    description: Create shipments
+    domain: shipment
+  
+  - name: shipment.edit
+    description: Edit shipment details
+    domain: shipment
+  
+  - name: shipment.list
+    description: List shipments
+    domain: shipment
+  
+  - name: shipment.track
+    description: Track shipment status
+    domain: shipment
+  
+  - name: shipment.history
+    description: View shipment history
+    domain: shipment
+  
+  - name: shipment.complete
+    description: Complete shipments
+    domain: shipment
+  
+  # Reporting Permissions
+  - name: report.view
+    description: View reports
+    domain: report
+  
+  - name: report.create
+    description: Create reports
+    domain: report
+  
+  - name: report.edit
+    description: Edit reports
+    domain: report
+  
+  - name: report.export
+    description: Export reports
+    domain: report
+  
+  # User Management Permissions
+  - name: user.view
+    description: View user details
+    domain: user
+  
+  - name: user.create
+    description: Create users
+    domain: user
+  
+  - name: user.edit
+    description: Edit user details
+    domain: user
+  
+  - name: user.delete
+    description: Delete users
+    domain: user
+  
+  - name: user.list
+    description: List users
+    domain: user
+  
+  - name: user.assign
+    description: Assign roles to users
+    domain: user
+  
+  # Role Management Permissions
+  - name: role.view
+    description: View role details
+    domain: role
+  
+  - name: role.create
+    description: Create roles
+    domain: role
+  
+  - name: role.edit
+    description: Edit role permissions
+    domain: role
+  
+  - name: role.delete
+    description: Delete roles (non-system roles only)
+    domain: role
+  
+  - name: role.list
+    description: List roles
+    domain: role
+  
+  - name: role.clone
+    description: Clone roles
+    domain: role
+  
+  # Import Permissions
+  - name: import.customer
+    description: Import customers
+    domain: import
+  
+  - name: import.product
+    description: Import products
+    domain: import
+  
+  - name: import.pricing
+    description: Import pricing
+    domain: import
+  
+  - name: import.rollback
+    description: Rollback imports
+    domain: import
+  
+  - name: import.view_audit
+    description: View import audit logs
+    domain: import
+  
+  # System Permissions
+  - name: system.config
+    description: Configure system settings
+    domain: system
+  
+  - name: system.view_logs
+    description: View system logs
+    domain: system
+  
+  - name: system.manage_tenants
+    description: Manage tenants
+    domain: system

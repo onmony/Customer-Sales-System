@@ -1,0 +1,51 @@
+# Transport Types Configuration
+# 
+# This file provides default transport types for the application.
+# On first startup, these are bootstrapped into the database.
+# After bootstrap, the database becomes the source of truth.
+# 
+# Transport types define the shipping methods available.
+# Types can be customized per tenant in Phase 3.
+
+transport_types:
+  - code: standard
+    name: Standard Shipping
+    description: Standard ground shipping
+    estimated_days: 5
+    is_default: true
+  
+  - code: express
+    name: Express Shipping
+    description: Expedited shipping
+    estimated_days: 2
+    is_default: false
+  
+  - code: overnight
+    name: Overnight Shipping
+    description: Next-day delivery
+    estimated_days: 1
+    is_default: false
+  
+  - code: economy
+    name: Economy Shipping
+    description: Budget shipping with longer delivery time
+    estimated_days: 10
+    is_default: false
+  
+  - code: local_pickup
+    name: Local Pickup
+    description: Customer picks up from warehouse
+    estimated_days: 0
+    is_default: false
+  
+  - code: courier
+    name: Courier Service
+    description: Dedicated courier delivery
+    estimated_days: 1
+    is_default: false
+  
+  - code: freight
+    name: Freight Shipping
+    description: Large freight shipment
+    estimated_days: 7
+    is_default: false

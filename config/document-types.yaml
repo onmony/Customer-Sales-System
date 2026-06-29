@@ -1,0 +1,93 @@
+# Document Types Configuration
+# 
+# This file provides default document types for the application.
+# On first startup, these are bootstrapped into the database.
+# After bootstrap, the database becomes the source of truth.
+# 
+# Document types define the types of documents that can be attached.
+# Types can be customized per tenant in Phase 3.
+
+document_types:
+  - code: invoice
+    name: Invoice
+    description: Commercial invoice document
+    category: financial
+    is_required_for_order: true
+  
+  - code: purchase_order
+    name: Purchase Order
+    description: Customer purchase order document
+    category: commercial
+    is_required_for_order: false
+  
+  - code: delivery_note
+    name: Delivery Note
+    description: Delivery confirmation document
+    category: logistics
+    is_required_for_order: true
+  
+  - code: packing_list
+    name: Packing List
+    description: Detailed packing list document
+    category: logistics
+    is_required_for_order: true
+  
+  - code: quotation
+    name: Quotation
+    description: Price quotation document
+    category: commercial
+    is_required_for_order: false
+  
+  - code: credit_note
+    name: Credit Note
+    description: Credit note for returns or corrections
+    category: financial
+    is_required_for_order: false
+  
+  - code: debit_note
+    name: Debit Note
+    description: Debit note for additional charges
+    category: financial
+    is_required_for_order: false
+  
+  - code: receipt
+    name: Receipt
+    description: Payment receipt document
+    category: financial
+    is_required_for_order: false
+  
+  - code: contract
+    name: Contract
+    description: Customer contract document
+    category: legal
+    is_required_for_order: false
+  
+  - code: tax_invoice
+    name: Tax Invoice
+    description: Tax-compliant invoice document
+    category: financial
+    is_required_for_order: false
+  
+  - code: proforma_invoice
+    name: Proforma Invoice
+    description: Preliminary invoice document
+    category: financial
+    is_required_for_order: false
+  
+  - code: insurance_certificate
+    name: Insurance Certificate
+    description: Shipping insurance document
+    category: logistics
+    is_required_for_order: false
+  
+  - code: certificate_of_origin
+    name: Certificate of Origin
+    description: Certificate of origin document
+    category: logistics
+    is_required_for_order: false
+  
+  - code: other
+    name: Other
+    description: Other document type
+    category: general
+    is_required_for_order: false

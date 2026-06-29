@@ -1,0 +1,61 @@
+# Feature Flags Configuration
+# 
+# This file provides default feature flags for the application.
+# On first startup, these are bootstrapped into the database.
+# After bootstrap, the database becomes the source of truth.
+# 
+# Feature flags can be enabled/disabled through the UI after bootstrap.
+# 
+# Philosophy: Configuration that a business may eventually customize belongs in config/.
+# Core business logic never belongs in configuration.
+
+feature_flags:
+  - name: customer_workspace
+    description: Enable Customer Workspace as operational entry point
+    is_enabled: true
+    is_system: true
+  
+  - name: import_center
+    description: Enable Import Center for data onboarding
+    is_enabled: true
+    is_system: true
+  
+  - name: global_search
+    description: Enable Global Search across entities
+    is_enabled: true
+    is_system: true
+  
+  - name: ai_suggestions
+    description: Enable AI-powered suggestions (Phase 4)
+    is_enabled: false
+    is_system: true
+  
+  - name: pricing_templates
+    description: Enable Pricing Templates for bulk pricing setup (Phase 4)
+    is_enabled: false
+    is_system: true
+  
+  - name: customer_groups
+    description: Enable Customer Groups for segmentation (Phase 4)
+    is_enabled: false
+    is_system: true
+  
+  - name: field_level_permissions
+    description: Enable Field-Level Permissions (Phase 4)
+    is_enabled: false
+    is_system: true
+  
+  - name: multi_tenant_overrides
+    description: Enable tenant-specific role and permission overrides (Phase 3)
+    is_enabled: false
+    is_system: true
+  
+  - name: event_outbox
+    description: Enable Event Outbox for reliable event delivery (Phase 3)
+    is_enabled: false
+    is_system: true
+  
+  - name: background_jobs
+    description: Enable Background Jobs processing (Phase 3)
+    is_enabled: false
+    is_system: true

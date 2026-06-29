@@ -1,0 +1,86 @@
+# Shipment Statuses Configuration
+# 
+# This file provides default shipment statuses for the application.
+# On first startup, these are bootstrapped into the database.
+# After bootstrap, the database becomes the source of truth.
+# 
+# Shipment statuses define the workflow states for shipments.
+# Statuses can be customized per tenant in Phase 3.
+
+shipment_statuses:
+  - code: pending
+    name: Pending
+    description: Shipment is pending warehouse processing
+    is_initial: true
+    is_terminal: false
+    color: "#6C757D"
+  
+  - code: picked
+    name: Picked
+    description: Items have been picked from warehouse
+    is_initial: false
+    is_terminal: false
+    color: "#17A2B8"
+  
+  - code: packed
+    name: Packed
+    description: Items have been packed for shipment
+    is_initial: false
+    is_terminal: false
+    color: "#007BFF"
+  
+  - code: ready
+    name: Ready for Pickup
+    description: Shipment is ready for carrier pickup
+    is_initial: false
+    is_terminal: false
+    color: "#FFC107"
+  
+  - code: in_transit
+    name: In Transit
+    description: Shipment is in transit to customer
+    is_initial: false
+    is_terminal: false
+    color: "#007BFF"
+  
+  - code: out_for_delivery
+    name: Out for Delivery
+    description: Shipment is out for final delivery
+    is_initial: false
+    is_terminal: false
+    color: "#28A745"
+  
+  - code: delivered
+    name: Delivered
+    description: Shipment has been delivered
+    is_initial: false
+    is_terminal: true
+    color: "#28A745"
+  
+  - code: attempted
+    name: Delivery Attempted
+    description: Delivery was attempted but unsuccessful
+    is_initial: false
+    is_terminal: false
+    color: "#FD7E14"
+  
+  - code: exception
+    name: Exception
+    description: Shipment has encountered an exception
+    is_initial: false
+    is_terminal: false
+    color: "#DC3545"
+  
+  - code: returned
+    name: Returned
+    description: Shipment has been returned
+    is_initial: false
+    is_terminal: true
+    color: "#DC3545"
+  
+  - code: cancelled
+    name: Cancelled
+    description: Shipment has been cancelled
+    is_initial: false
+    is_terminal: true
+    color: "#6C757D"

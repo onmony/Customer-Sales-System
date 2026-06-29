@@ -1,0 +1,79 @@
+# Invoice Statuses Configuration
+# 
+# This file provides default invoice statuses for the application.
+# On first startup, these are bootstrapped into the database.
+# After bootstrap, the database becomes the source of truth.
+# 
+# Invoice statuses define the workflow states for invoices.
+# Statuses can be customized per tenant in Phase 3.
+
+invoice_statuses:
+  - code: draft
+    name: Draft
+    description: Invoice is being generated and not yet issued
+    is_initial: true
+    is_terminal: false
+    color: "#6C757D"
+  
+  - code: generated
+    name: Generated
+    description: Invoice has been generated from order
+    is_initial: false
+    is_terminal: false
+    color: "#17A2B8"
+  
+  - code: issued
+    name: Issued
+    description: Invoice has been issued to customer
+    is_initial: false
+    is_terminal: false
+    color: "#007BFF"
+  
+  - code: sent
+    name: Sent
+    description: Invoice has been sent to customer
+    is_initial: false
+    is_terminal: false
+    color: "#007BFF"
+  
+  - code: viewed
+    name: Viewed
+    description: Customer has viewed the invoice
+    is_initial: false
+    is_terminal: false
+    color: "#17A2B8"
+  
+  - code: partial
+    name: Partially Paid
+    description: Invoice has been partially paid
+    is_initial: false
+    is_terminal: false
+    color: "#FFC107"
+  
+  - code: paid
+    name: Paid
+    description: Invoice has been fully paid
+    is_initial: false
+    is_terminal: true
+    color: "#28A745"
+  
+  - code: overdue
+    name: Overdue
+    description: Invoice is past due date
+    is_initial: false
+    is_terminal: false
+    color: "#DC3545"
+  
+  - code: void
+    name: Void
+    description: Invoice has been voided
+    is_initial: false
+    is_terminal: true
+    color: "#6C757D"
+  
+  - code: written_off
+    name: Written Off
+    description: Invoice has been written off as bad debt
+    is_initial: false
+    is_terminal: true
+    color: "#DC3545"
