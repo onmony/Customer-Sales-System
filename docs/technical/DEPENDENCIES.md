@@ -77,3 +77,120 @@ Product
 
 Customer Workspace is a read-and-action composition surface over customer-scoped modules.
 
+## Dependency Graph
+
+```text
+                    ┌─────────────┐
+                    │   Tenant    │
+                    │   Shared    │
+                    └──────┬──────┘
+                           │
+           ┌───────────────┼───────────────┐
+           │               │               │
+           ▼               ▼               ▼
+    ┌─────────────┐ ┌─────────────┐ ┌─────────────┐
+    │  Customer   │ │   Product   │ │  Identity   │
+    │   Module    │ │   Module    │ │   Shared    │
+    └──────┬──────┘ └──────┬──────┘ └─────────────┘
+           │               │
+           │               │
+           ▼               ▼
+    ┌─────────────┐ ┌─────────────┐
+    │   Pricing   │◄─────────────┤
+    │   Module    │               │
+    └──────┬──────┘               │
+           │                       │
+           ▼                       │
+    ┌─────────────┐               │
+    │    Order    │◄──────────────┘
+    │   Module    │
+    └──────┬──────┘
+           │
+           ▼
+    ┌─────────────┐
+    │   Invoice   │
+    │   Module    │
+    └──────┬──────┘
+           │
+           ▼
+    ┌─────────────┐
+    │  Warehouse  │
+    │   Module    │
+    └──────┬──────┘
+           │
+           ▼
+    ┌─────────────┐
+    │  Shipment   │
+    │   Module    │
+    └──────┬──────┘
+           │
+           ▼
+    ┌─────────────┐
+    │  Delivery   │
+    │   Module    │
+    └──────┬──────┘
+           │
+           ▼
+    ┌─────────────┐
+    │   Payment   │
+    │   Module    │
+    └─────────────┘
+
+Customer Workspace (Read Model)
+    ├── Reads from: Customer, Order, Pricing, Invoice, Warehouse, Shipment
+    └── Never writes to any module
+```
+
+## Circular Dependency Check
+
+**Status:** No circular dependencies detected.
+
+**Verification:**
+- Customer → Pricing → Order → Invoice → Warehouse → Shipment → Delivery → Payment (linear flow)
+- Product → Pricing → Order → Warehouse → Shipment (linear flow)
+- Customer Workspace reads from multiple modules but does not write back
+- All forbidden dependencies are respected
+
+## Future Dependencies
+
+### Phase 2: Warehouse & Shipment
+
+**New Dependencies:**
+- Warehouse → Product (for inventory checks)
+- Shipment → Transport Types (for carrier selection)
+
+**Still Forbidden:**
+- Warehouse → Pricing (pricing calculation)
+- Shipment → Invoice (invoice mutation)
+
+### Phase 3: Finance & Accounting
+
+**New Dependencies:**
+- Payment → Bank Integration (external)
+- Accounting → Invoice (read-only for reporting)
+
+**Still Forbidden:**
+- Accounting → Order (order mutation)
+- Accounting → Pricing (pricing calculation)
+
+### Phase 4: AI & Analytics
+
+**New Dependencies:**
+- AI Module → Events (read-only)
+- AI Module → Read Models (read-only)
+- Analytics Module → Events (read-only)
+- Analytics Module → Read Models (read-only)
+
+**Still Forbidden:**
+- AI Module → Aggregates (direct mutation)
+- Analytics Module → Aggregates (direct mutation)
+
+### Phase 5: Integrations
+
+**New Dependencies:**
+- Integration Module → Events (read-only)
+- Integration Module → API (external systems)
+
+**Still Forbidden:**
+- Integration Module → Aggregates (direct mutation without events)
+
