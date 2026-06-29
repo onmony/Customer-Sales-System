@@ -1,0 +1,167 @@
+{
+  "metadata": {
+    "name": "Phase 1 Demo Data",
+    "scope": "Customer, Product, Pricing, Order, Invoice",
+    "tenantId": "tenant_demo",
+    "notes": [
+      "Demo data verifies Phase 1 only.",
+      "No Phase 2 modules are represented.",
+      "Invoices preserve customer, product, quantity, and pricing snapshots."
+    ]
+  },
+  "customers": [
+    { "id": "cus_demo_001", "tenantId": "tenant_demo", "displayName": "Aarav Retail Mart" },
+    { "id": "cus_demo_002", "tenantId": "tenant_demo", "displayName": "Blue Peak Distributors" },
+    { "id": "cus_demo_003", "tenantId": "tenant_demo", "displayName": "Cityline Traders" },
+    { "id": "cus_demo_004", "tenantId": "tenant_demo", "displayName": "Delta Wholesale" },
+    { "id": "cus_demo_005", "tenantId": "tenant_demo", "displayName": "Evergreen Stores" },
+    { "id": "cus_demo_006", "tenantId": "tenant_demo", "displayName": "Fresh Basket Supply" },
+    { "id": "cus_demo_007", "tenantId": "tenant_demo", "displayName": "Golden Cart Retail" },
+    { "id": "cus_demo_008", "tenantId": "tenant_demo", "displayName": "Harbor Point Market" },
+    { "id": "cus_demo_009", "tenantId": "tenant_demo", "displayName": "Indigo Business House" },
+    { "id": "cus_demo_010", "tenantId": "tenant_demo", "displayName": "Jasmine General Stores" }
+  ],
+  "products": [
+    { "id": "pro_demo_001", "tenantId": "tenant_demo", "displayName": "Classic Notebook", "active": true },
+    { "id": "pro_demo_002", "tenantId": "tenant_demo", "displayName": "Steel Water Bottle", "active": true },
+    { "id": "pro_demo_003", "tenantId": "tenant_demo", "displayName": "Desk Organizer", "active": true },
+    { "id": "pro_demo_004", "tenantId": "tenant_demo", "displayName": "LED Desk Lamp", "active": true },
+    { "id": "pro_demo_005", "tenantId": "tenant_demo", "displayName": "Office Pen Pack", "active": true },
+    { "id": "pro_demo_006", "tenantId": "tenant_demo", "displayName": "Thermal Paper Roll", "active": true },
+    { "id": "pro_demo_007", "tenantId": "tenant_demo", "displayName": "Packing Tape", "active": true },
+    { "id": "pro_demo_008", "tenantId": "tenant_demo", "displayName": "Invoice Folder", "active": true },
+    { "id": "pro_demo_009", "tenantId": "tenant_demo", "displayName": "Barcode Label Sheet", "active": true },
+    { "id": "pro_demo_010", "tenantId": "tenant_demo", "displayName": "Shipping Marker", "active": true }
+  ],
+  "pricing": [
+    { "id": "prv_demo_001", "tenantId": "tenant_demo", "customerId": "cus_demo_001", "productId": "pro_demo_001", "price": 45, "versionNumber": 1 },
+    { "id": "prv_demo_002", "tenantId": "tenant_demo", "customerId": "cus_demo_002", "productId": "pro_demo_002", "price": 210, "versionNumber": 1 },
+    { "id": "prv_demo_003", "tenantId": "tenant_demo", "customerId": "cus_demo_003", "productId": "pro_demo_003", "price": 160, "versionNumber": 1 },
+    { "id": "prv_demo_004", "tenantId": "tenant_demo", "customerId": "cus_demo_004", "productId": "pro_demo_004", "price": 725, "versionNumber": 1 },
+    { "id": "prv_demo_005", "tenantId": "tenant_demo", "customerId": "cus_demo_005", "productId": "pro_demo_005", "price": 95, "versionNumber": 1 },
+    { "id": "prv_demo_006", "tenantId": "tenant_demo", "customerId": "cus_demo_006", "productId": "pro_demo_006", "price": 62, "versionNumber": 1 },
+    { "id": "prv_demo_007", "tenantId": "tenant_demo", "customerId": "cus_demo_007", "productId": "pro_demo_007", "price": 78, "versionNumber": 1 },
+    { "id": "prv_demo_008", "tenantId": "tenant_demo", "customerId": "cus_demo_008", "productId": "pro_demo_008", "price": 120, "versionNumber": 1 },
+    { "id": "prv_demo_009", "tenantId": "tenant_demo", "customerId": "cus_demo_009", "productId": "pro_demo_009", "price": 340, "versionNumber": 1 },
+    { "id": "prv_demo_010", "tenantId": "tenant_demo", "customerId": "cus_demo_010", "productId": "pro_demo_010", "price": 55, "versionNumber": 1 },
+    { "id": "prv_demo_011", "tenantId": "tenant_demo", "customerId": "cus_demo_001", "productId": "pro_demo_002", "price": 205, "versionNumber": 1 },
+    { "id": "prv_demo_012", "tenantId": "tenant_demo", "customerId": "cus_demo_002", "productId": "pro_demo_005", "price": 88, "versionNumber": 1 },
+    { "id": "prv_demo_013", "tenantId": "tenant_demo", "customerId": "cus_demo_003", "productId": "pro_demo_006", "price": 59, "versionNumber": 1 },
+    { "id": "prv_demo_014", "tenantId": "tenant_demo", "customerId": "cus_demo_004", "productId": "pro_demo_008", "price": 115, "versionNumber": 1 },
+    { "id": "prv_demo_015", "tenantId": "tenant_demo", "customerId": "cus_demo_005", "productId": "pro_demo_010", "price": 52, "versionNumber": 1 }
+  ],
+  "orders": [
+    {
+      "id": "ord_demo_001",
+      "tenantId": "tenant_demo",
+      "customerId": "cus_demo_001",
+      "saved": true,
+      "customerSnapshot": { "customerId": "cus_demo_001", "tenantId": "tenant_demo", "displayName": "Aarav Retail Mart" },
+      "items": [
+        {
+          "id": "oit_demo_001",
+          "productId": "pro_demo_001",
+          "quantity": 12,
+          "productSnapshot": { "productId": "pro_demo_001", "tenantId": "tenant_demo", "displayName": "Classic Notebook", "unit": null },
+          "pricingSnapshot": { "tenantId": "tenant_demo", "customerId": "cus_demo_001", "productId": "pro_demo_001", "price": 45, "pricingVersionId": "prv_demo_001", "versionNumber": 1 }
+        },
+        {
+          "id": "oit_demo_002",
+          "productId": "pro_demo_002",
+          "quantity": 4,
+          "productSnapshot": { "productId": "pro_demo_002", "tenantId": "tenant_demo", "displayName": "Steel Water Bottle", "unit": null },
+          "pricingSnapshot": { "tenantId": "tenant_demo", "customerId": "cus_demo_001", "productId": "pro_demo_002", "price": 205, "pricingVersionId": "prv_demo_011", "versionNumber": 1 }
+        }
+      ]
+    },
+    {
+      "id": "ord_demo_002",
+      "tenantId": "tenant_demo",
+      "customerId": "cus_demo_004",
+      "saved": true,
+      "customerSnapshot": { "customerId": "cus_demo_004", "tenantId": "tenant_demo", "displayName": "Delta Wholesale" },
+      "items": [
+        {
+          "id": "oit_demo_003",
+          "productId": "pro_demo_004",
+          "quantity": 2,
+          "productSnapshot": { "productId": "pro_demo_004", "tenantId": "tenant_demo", "displayName": "LED Desk Lamp", "unit": null },
+          "pricingSnapshot": { "tenantId": "tenant_demo", "customerId": "cus_demo_004", "productId": "pro_demo_004", "price": 725, "pricingVersionId": "prv_demo_004", "versionNumber": 1 }
+        },
+        {
+          "id": "oit_demo_004",
+          "productId": "pro_demo_008",
+          "quantity": 10,
+          "productSnapshot": { "productId": "pro_demo_008", "tenantId": "tenant_demo", "displayName": "Invoice Folder", "unit": null },
+          "pricingSnapshot": { "tenantId": "tenant_demo", "customerId": "cus_demo_004", "productId": "pro_demo_008", "price": 115, "pricingVersionId": "prv_demo_014", "versionNumber": 1 }
+        }
+      ]
+    },
+    {
+      "id": "ord_demo_003",
+      "tenantId": "tenant_demo",
+      "customerId": "cus_demo_009",
+      "saved": true,
+      "customerSnapshot": { "customerId": "cus_demo_009", "tenantId": "tenant_demo", "displayName": "Indigo Business House" },
+      "items": [
+        {
+          "id": "oit_demo_005",
+          "productId": "pro_demo_009",
+          "quantity": 3,
+          "productSnapshot": { "productId": "pro_demo_009", "tenantId": "tenant_demo", "displayName": "Barcode Label Sheet", "unit": null },
+          "pricingSnapshot": { "tenantId": "tenant_demo", "customerId": "cus_demo_009", "productId": "pro_demo_009", "price": 340, "pricingVersionId": "prv_demo_009", "versionNumber": 1 }
+        }
+      ]
+    }
+  ],
+  "invoices": [
+    {
+      "id": "inv_demo_001",
+      "tenantId": "tenant_demo",
+      "sourceOrderId": "ord_demo_001",
+      "issued": true,
+      "immutable": true,
+      "customerSnapshot": { "customerId": "cus_demo_001", "tenantId": "tenant_demo", "displayName": "Aarav Retail Mart" },
+      "items": [
+        {
+          "id": "iiv_demo_001",
+          "sourceOrderItemId": "oit_demo_001",
+          "quantity": 12,
+          "productSnapshot": { "productId": "pro_demo_001", "tenantId": "tenant_demo", "displayName": "Classic Notebook", "unit": null },
+          "pricingSnapshot": { "tenantId": "tenant_demo", "customerId": "cus_demo_001", "productId": "pro_demo_001", "price": 45, "pricingVersionId": "prv_demo_001", "versionNumber": 1 }
+        },
+        {
+          "id": "iiv_demo_002",
+          "sourceOrderItemId": "oit_demo_002",
+          "quantity": 4,
+          "productSnapshot": { "productId": "pro_demo_002", "tenantId": "tenant_demo", "displayName": "Steel Water Bottle", "unit": null },
+          "pricingSnapshot": { "tenantId": "tenant_demo", "customerId": "cus_demo_001", "productId": "pro_demo_002", "price": 205, "pricingVersionId": "prv_demo_011", "versionNumber": 1 }
+        }
+      ]
+    },
+    {
+      "id": "inv_demo_002",
+      "tenantId": "tenant_demo",
+      "sourceOrderId": "ord_demo_002",
+      "issued": true,
+      "immutable": true,
+      "customerSnapshot": { "customerId": "cus_demo_004", "tenantId": "tenant_demo", "displayName": "Delta Wholesale" },
+      "items": [
+        {
+          "id": "iiv_demo_003",
+          "sourceOrderItemId": "oit_demo_003",
+          "quantity": 2,
+          "productSnapshot": { "productId": "pro_demo_004", "tenantId": "tenant_demo", "displayName": "LED Desk Lamp", "unit": null },
+          "pricingSnapshot": { "tenantId": "tenant_demo", "customerId": "cus_demo_004", "productId": "pro_demo_004", "price": 725, "pricingVersionId": "prv_demo_004", "versionNumber": 1 }
+        },
+        {
+          "id": "iiv_demo_004",
+          "sourceOrderItemId": "oit_demo_004",
+          "quantity": 10,
+          "productSnapshot": { "productId": "pro_demo_008", "tenantId": "tenant_demo", "displayName": "Invoice Folder", "unit": null },
+          "pricingSnapshot": { "tenantId": "tenant_demo", "customerId": "cus_demo_004", "productId": "pro_demo_008", "price": 115, "pricingVersionId": "prv_demo_014", "versionNumber": 1 }
+        }
+      ]
+    }
+  ]
+}
