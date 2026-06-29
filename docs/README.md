@@ -10,5 +10,6 @@ This folder contains the AI Engineering Knowledge Base for the project.
 - [features](features/README.md)
 - [rules](rules/README.md)
 - [decisions](decisions/README.md)
+- [security](security/ROLE_MATRIX.md)
 - [playbooks](playbooks/README.md)
 - [templates](templates/README.md)
