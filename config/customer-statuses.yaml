@@ -1,0 +1,37 @@
+# Customer Statuses Configuration
+# 
+# This file provides default customer statuses for the application.
+# On first startup, these are bootstrapped into the database.
+# After bootstrap, the database becomes the source of truth.
+# 
+# Customer statuses define the workflow states for customers.
+# Statuses can be customized per tenant in Phase 3.
+
+customer_statuses:
+  - code: active
+    name: Active
+    description: Customer is active and can place orders
+    is_initial: true
+    is_terminal: false
+    color: "#28A745"
+  
+  - code: inactive
+    name: Inactive
+    description: Customer is inactive and cannot place orders
+    is_initial: false
+    is_terminal: false
+    color: "#6C757D"
+  
+  - code: on_hold
+    name: On Hold
+    description: Customer is on hold pending resolution
+    is_initial: false
+    is_terminal: false
+    color: "#FFC107"
+  
+  - code: blocked
+    name: Blocked
+    description: Customer is blocked due to credit or compliance issues
+    is_initial: false
+    is_terminal: true
+    color: "#DC3545"

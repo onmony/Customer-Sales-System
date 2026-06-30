@@ -1,0 +1,44 @@
+# Pricing Statuses Configuration
+# 
+# This file provides default pricing statuses for the application.
+# On first startup, these are bootstrapped into the database.
+# After bootstrap, the database becomes the source of truth.
+# 
+# Pricing statuses define the workflow states for pricing versions.
+# Statuses can be customized per tenant in Phase 3.
+
+pricing_statuses:
+  - code: draft
+    name: Draft
+    description: Pricing is being created and not yet active
+    is_initial: true
+    is_terminal: false
+    color: "#6C757D"
+  
+  - code: active
+    name: Active
+    description: Pricing is currently in effect for order resolution
+    is_initial: false
+    is_terminal: false
+    color: "#28A745"
+  
+  - code: future
+    name: Future
+    description: Pricing is scheduled to become active in the future
+    is_initial: false
+    is_terminal: false
+    color: "#17A2B8"
+  
+  - code: expired
+    name: Expired
+    description: Pricing has expired and is no longer in effect
+    is_initial: false
+    is_terminal: true
+    color: "#6C757D"
+  
+  - code: cancelled
+    name: Cancelled
+    description: Pricing has been cancelled before activation
+    is_initial: false
+    is_terminal: true
+    color: "#DC3545"
