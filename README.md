@@ -62,6 +62,55 @@ LOG_LEVEL=info
 - Docker and Docker Compose
 - PostgreSQL (if not using Docker)
 
+### Setting Up a New Database
+
+This section explains how to bootstrap a completely new PostgreSQL database (local VM, cloud PostgreSQL, managed PostgreSQL, Docker, etc.).
+
+**Quick Start (under 10 minutes):**
+
+```bash
+# 1. Navigate to backend
+cd backend
+
+# 2. Install dependencies
+npm install
+
+# 3. Configure DATABASE_URL in .env
+# Create .env file with:
+DATABASE_URL="postgresql://user:password@localhost:5432/customer_sales_system"
+NODE_ENV=development
+
+# 4. Generate Prisma client
+npm run prisma:generate
+
+# 5. Run migrations
+npm run prisma:deploy
+
+# 6. Seed master data
+npm run prisma:seed
+
+# 7. Start the application
+npm run dev
+```
+
+**Alternative: Using the setup script**
+
+```bash
+cd backend
+npm install
+# Configure .env with DATABASE_URL
+npm run db:setup
+npm run dev
+```
+
+**Database Setup Options:**
+
+- **Local PostgreSQL**: Install PostgreSQL locally, create database, configure DATABASE_URL
+- **Docker PostgreSQL**: Run `docker run --name postgres -e POSTGRES_PASSWORD=password -e POSTGRES_DB=customer_sales_system -p 5432:5432 -d postgres:16`
+- **Cloud PostgreSQL**: Create instance in cloud provider, get connection string, configure DATABASE_URL
+
+For detailed database operations, see [docs/technical/database/DATABASE.md](docs/technical/database/DATABASE.md).
+
 ### Using Docker Compose (Recommended)
 
 1. Start all services:
@@ -106,8 +155,13 @@ Frontend runs on port 3000.
 - `npm run format:check` - Check code formatting
 - `npm test` - Run tests with Vitest
 - `npm run prisma:generate` - Generate Prisma client
-- `npm run prisma:migrate` - Run Prisma migrations
+- `npm run prisma:migrate` - Create and apply development migration
+- `npm run prisma:deploy` - Apply migrations (production)
+- `npm run prisma:seed` - Seed master data
 - `npm run prisma:studio` - Open Prisma Studio
+- `npm run db:setup` - Generate client, apply migrations, seed data
+- `npm run db:reset` - Reset development database (WARNING: drops data)
+- `npm run db:studio` - Open Prisma Studio
 
 ### Frontend
 - `npm run dev` - Development server with hot reload
