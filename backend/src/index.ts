@@ -8,6 +8,10 @@ import { CustomerController } from './controllers/CustomerController';
 import { CustomerService } from './services/CustomerService';
 import { CustomerRepositoryImpl } from './repositories/impl/CustomerRepositoryImpl';
 import { createCustomerRoutes } from './routes/customerRoutes';
+import { ProductController } from './controllers/ProductController';
+import { ProductService } from './services/ProductService';
+import { ProductRepositoryImpl } from './repositories/impl/ProductRepositoryImpl';
+import { createProductRoutes } from './routes/productRoutes';
 
 const app = express();
 
@@ -20,9 +24,14 @@ const customerRepository = new CustomerRepositoryImpl();
 const customerService = new CustomerService(customerRepository);
 const customerController = new CustomerController(customerService);
 
+const productRepository = new ProductRepositoryImpl();
+const productService = new ProductService(productRepository);
+const productController = new ProductController(productService);
+
 // Routes
 app.use('/health', healthRoutes);
 app.use('/api', createCustomerRoutes(customerController));
+app.use('/api', createProductRoutes(productController));
 
 // Error handling
 app.use(notFoundHandler);
