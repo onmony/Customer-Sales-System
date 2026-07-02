@@ -24,6 +24,18 @@
 
 If a business requirement is unclear, stop and ask questions. Do not invent business rules.
 
+## Permanent Review Rule
+
+If a user has to understand a technical concept (versions, activation, internal state management), ask whether it can be replaced with a business action instead.
+
+This principle keeps the ERP intuitive for SMB users while letting the system handle all complexity behind the scenes. See [ADR 001: Business Actions vs System Versioning](adr/001-business-actions-vs-system-versioning.md) for detailed guidance.
+
+## API Design Rule
+
+Expose business actions, not technical operations.
+
+APIs should reflect user-facing business concepts (Edit Price, Issue Invoice) rather than technical implementation details (activate version, deactivate version, manage state). Technical concerns like versioning, history, and audit must be handled internally by the system.
+
 ## Related Documents
 
 - [MASTER_SKILL](MASTER_SKILL.md)

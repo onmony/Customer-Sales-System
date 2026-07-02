@@ -33,12 +33,13 @@ describe('ProductController Integration Tests', () => {
   describe('POST /api/products', () => {
     it('should create a product with valid data', async () => {
       // This test requires a valid tenant to exist
+      const uniqueSku = 'SKU-' + Date.now();
       const response = await request(app)
         .post('/api/products')
         .send({
           tenantId: 'test-tenant-1',
           displayName: 'Test Product',
-          sku: 'SKU-123',
+          sku: uniqueSku,
           unit: 'PCS',
           isActive: true,
           createdBy: 'test-user',
@@ -47,7 +48,7 @@ describe('ProductController Integration Tests', () => {
       expect(response.status).toBe(201);
       expect(response.body).toHaveProperty('id');
       expect(response.body.displayName).toBe('Test Product');
-      expect(response.body.sku).toBe('SKU-123');
+      expect(response.body.sku).toBe(uniqueSku);
       expect(response.body.unit).toBe('PCS');
     });
 

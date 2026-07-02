@@ -12,6 +12,10 @@ import { ProductController } from './controllers/ProductController';
 import { ProductService } from './services/ProductService';
 import { ProductRepositoryImpl } from './repositories/impl/ProductRepositoryImpl';
 import { createProductRoutes } from './routes/productRoutes';
+import { PricingController } from './controllers/PricingController';
+import { PricingService } from './services/PricingService';
+import { PricingRepositoryImpl } from './repositories/impl/PricingRepositoryImpl';
+import { createPricingRoutes } from './routes/pricingRoutes';
 
 const app = express();
 
@@ -28,10 +32,15 @@ const productRepository = new ProductRepositoryImpl();
 const productService = new ProductService(productRepository);
 const productController = new ProductController(productService);
 
+const pricingRepository = new PricingRepositoryImpl();
+const pricingService = new PricingService(pricingRepository);
+const pricingController = new PricingController(pricingService);
+
 // Routes
 app.use('/health', healthRoutes);
 app.use('/api', createCustomerRoutes(customerController));
 app.use('/api', createProductRoutes(productController));
+app.use('/api', createPricingRoutes(pricingController));
 
 // Error handling
 app.use(notFoundHandler);

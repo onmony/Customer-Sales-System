@@ -59,6 +59,7 @@ Related documents:
 | PRD-011 | Immutable Business Snapshots | Orders and invoices must preserve the values that existed when the business event occurred | PRINCIPLES.md |
 | PRD-012 | Multi-Tenant Foundation | Tenant isolation is a foundation, not a later enhancement | PRINCIPLES.md |
 | PRD-013 | AI-First Documentation | Documentation must allow future AI agents to continue development without previous chat history | PRINCIPLES.md |
+| PRD-014 | Business Actions vs System Versioning | Users perform business actions; system manages versions, history, and audit automatically. Users should never manage technical versions, activate/deactivate versions, or understand internal version numbers | PRINCIPLES.md, ADR 001 |
 
 ## Customer Rules
 
