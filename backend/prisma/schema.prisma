@@ -326,26 +326,34 @@ model Pricing {
 }
 
 model Order {
-  id            String    @id @default(uuid())
-  tenantId      String
-  customerId    String
-  orderNumber   String
-  orderDate     DateTime  @default(now())
-  statusId      String
-  totalAmount   Decimal   @default(0) @db.Decimal(15, 2)
-  currency      String    @default("INR")
-  notes         String?
-  correlationId String?
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-  createdBy     String?
-  updatedBy     String?
-  deletedAt     DateTime?
+  id                    String    @id @default(uuid())
+  tenantId              String
+  customerId            String
+  orderNumber           String
+  orderDate             DateTime  @default(now())
+  statusId              String
+  totalAmount           Decimal   @default(0) @db.Decimal(15, 2)
+  currency              String    @default("INR")
+  notes                 String?
+  correlationId         String?
+  
+  // Customer Snapshot (immutable)
+  customerSnapshotName      String
+  customerSnapshotGstNumber  String?
+  customerSnapshotBillingAddress   Json?
+  customerSnapshotShippingAddress  Json?
+  
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+  createdBy             String?
+  updatedBy             String?
+  deletedAt             DateTime?
 
   // Relations
   tenant            Tenant             @relation(fields: [tenantId], references: [id], onDelete: Cascade)
   customer          Customer           @relation(fields: [customerId], references: [id], onDelete: Cascade)
   status            OrderStatus        @relation(fields: [statusId], references: [id])
+  orderItems        OrderItem[]
   invoices          Invoice[]
   warehouseRequests WarehouseRequest[]
 
@@ -357,6 +365,42 @@ model Order {
   @@index([statusId])
   @@index([deletedAt])
   @@map("orders")
+}
+
+model OrderItem {
+  id              String    @id @default(uuid())
+  orderId         String
+  productId       String
+  quantity        Decimal   @db.Decimal(15, 2)
+  unitPrice       Decimal   @db.Decimal(15, 2)
+  lineTotal       Decimal   @db.Decimal(15, 2)
+  currency        String    @default("INR")
+  notes           String?
+  
+  // Product Snapshot (immutable)
+  productSnapshotCode     String?
+  productSnapshotName     String
+  productSnapshotUnit     String
+  
+  // Pricing Snapshot (immutable)
+  pricingSnapshotVersion       Int
+  pricingSnapshotEffectiveDate DateTime
+  pricingSnapshotCurrency      String
+  pricingSnapshotSource        String
+  
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  createdBy       String?
+  updatedBy       String?
+  deletedAt       DateTime?
+
+  // Relations
+  order   Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  @@index([orderId])
+  @@index([productId])
+  @@index([deletedAt])
+  @@map("order_items")
 }
 
 model Invoice {

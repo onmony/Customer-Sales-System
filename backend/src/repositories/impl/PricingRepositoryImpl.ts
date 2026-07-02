@@ -192,4 +192,17 @@ export class PricingRepositoryImpl implements PricingRepository {
       orderBy: { createdAt: 'desc' },
     });
   }
+
+  // Status lookup methods (shared across modules)
+  async findStatusById(id: string): Promise<any | null> {
+    return prisma.orderStatus.findUnique({
+      where: { id },
+    });
+  }
+
+  async findStatusByCode(code: string): Promise<any | null> {
+    return prisma.orderStatus.findUnique({
+      where: { code },
+    });
+  }
 }

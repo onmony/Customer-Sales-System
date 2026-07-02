@@ -40,6 +40,35 @@ If a user has to understand a technical concept (versions, activation, internal 
 
 See [ADR 001: Business Actions vs System Versioning](adr/001-business-actions-vs-system-versioning.md) for detailed implementation guidance.
 
+## Audit vs Business History
+
+**Audit (Technical History):**
+- Captures: who, when, what changed
+- Purpose: System integrity, debugging, compliance
+- Implementation: Audit columns (`createdAt`, `updatedAt`, `createdBy`, `updatedBy`)
+- Scope: All entities in all modules
+- User Visibility: Read-only, for compliance and transparency
+
+**Business History (Domain-Specific):**
+- Captures: Business state transitions meaningful to users
+- Purpose: Business intelligence, decision support, workflow tracking
+- Implementation: Dedicated revision tables (when needed)
+- Scope: Only when business value justifies complexity
+- User Visibility: Read-only, for business decisions
+
+**Decision Principle:**
+- Use audit columns by default (low complexity, universal value)
+- Introduce business history tables only when:
+  - Users need to compare business states for decision-making
+  - Workflow complexity requires state tracking beyond audit
+  - Customer value justifies implementation cost
+
+**Example: Order Module (Module 6):**
+- Draft orders use audit columns only
+- No dedicated OrderRevision table in Module 6
+- OrderRevision deferred to Module 10+ when warehouse/invoice integration adds value
+- Audit columns provide sufficient technical history for compliance and debugging
+
 ## AI-First Documentation
 
 Documentation must allow future AI agents to continue development without previous chat history.

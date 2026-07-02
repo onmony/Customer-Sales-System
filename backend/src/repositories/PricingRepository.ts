@@ -22,4 +22,8 @@ export interface PricingRepository {
   updateStatus(id: string, statusId: string, updatedBy?: string): Promise<Prisma.PricingGetPayload<null>>;
   archive(id: string): Promise<Prisma.PricingGetPayload<null>>;
   list(tenantId: string, skip?: number, take?: number): Promise<Prisma.PricingGetPayload<null>[]>;
+  
+  // Status lookup methods (shared across modules)
+  findStatusById(id: string): Promise<any | null>;
+  findStatusByCode(code: string): Promise<any | null>;
 }

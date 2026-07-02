@@ -84,6 +84,29 @@ Adopt the architectural principle that users perform BUSINESS ACTIONS while the 
 
 ## Implementation Notes
 
+### Audit vs Business History
+
+**Audit (Technical History):**
+- Captures: who, when, what changed
+- Purpose: System integrity, debugging, compliance
+- Implementation: Audit columns (`createdAt`, `updatedAt`, `createdBy`, `updatedBy`)
+- Scope: All entities in all modules
+- User Visibility: Read-only, for compliance and transparency
+
+**Business History (Domain-Specific):**
+- Captures: Business state transitions meaningful to users
+- Purpose: Business intelligence, decision support, workflow tracking
+- Implementation: Dedicated revision tables (when needed)
+- Scope: Only when business value justifies complexity
+- User Visibility: Read-only, for business decisions
+
+**Decision Principle:**
+- Use audit columns by default (low complexity, universal value)
+- Introduce business history tables only when:
+  - Users need to compare business states for decision-making
+  - Workflow complexity requires state tracking beyond audit
+  - Customer value justifies implementation cost
+
 ### Versioning Strategy
 - Every business action that modifies data creates a new immutable version
 - Previous versions are never modified
@@ -91,7 +114,8 @@ Adopt the architectural principle that users perform BUSINESS ACTIONS while the 
 - Version numbers are internal integers, never exposed to users
 
 ### History Access
-- History is read-only via dedicated endpoints
+- Audit history is always available via audit columns
+- Business history is available via dedicated endpoints when implemented
 - Users can view history but cannot modify it
 - History includes full audit trail (who, when, what changed)
 
