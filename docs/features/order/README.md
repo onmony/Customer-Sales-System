@@ -8,7 +8,7 @@ The Order module exists so a salesperson can create an accurate customer order q
 
 ## Scope
 
-Order V1 covers customer-first order creation, product line items, pricing resolution dependency, immutable order item pricing snapshots, save validation, invoice readiness, and tenant isolation.
+Order V1 covers customer-first order creation, product line items, pricing resolution dependency, immutable order item pricing snapshots, complete order document payload preservation, save validation, invoice readiness, and tenant isolation.
 
 This package is documentation only. It does not contain implementation.
 
@@ -21,6 +21,10 @@ Business rules are defined in [Order V1](VERSIONS/V1.md). They are summarized he
 - A saved order must contain at least one order item.
 - Each order item references one product.
 - Each saved order item contains an immutable pricing snapshot.
+- Each order owns an `orderDocumentPayload` JSONB business document payload.
+- Draft orders may regenerate the payload whenever the order changes.
+- Confirmed orders freeze the payload forever.
+- Order rendering must use `orderDocumentPayload`.
 - Future customer, product, or pricing changes must not rewrite saved orders.
 - Cross-tenant order access is forbidden.
 
@@ -30,6 +34,7 @@ Business rules are defined in [Order V1](VERSIONS/V1.md). They are summarized he
 - Order
 - Order item
 - Order pricing snapshot
+- Order document payload
 - Order customer snapshot
 - Order product snapshot
 - Customer
@@ -43,6 +48,7 @@ Business rules are defined in [Order V1](VERSIONS/V1.md). They are summarized he
 - An order item stores one pricing snapshot.
 - An order item may store product snapshot context.
 - An order may store customer snapshot context.
+- An order stores the complete commercial representation in `orderDocumentPayload`.
 - An order can produce an invoice.
 
 ## User Journey
@@ -53,7 +59,8 @@ Business rules are defined in [Order V1](VERSIONS/V1.md). They are summarized he
 4. Pricing resolves for each order item through the Pricing module.
 5. The salesperson reviews order items and resolved prices.
 6. The salesperson saves the order.
-7. The saved order preserves immutable snapshots and becomes eligible for invoice creation.
+7. The saved order preserves immutable snapshots and a complete document payload.
+8. When confirmed, the order payload is frozen and the order becomes eligible for invoice creation.
 
 ## Documentation Order
 

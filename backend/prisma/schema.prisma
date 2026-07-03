@@ -336,6 +336,11 @@ model Order {
   currency              String    @default("INR")
   notes                 String?
   correlationId         String?
+
+  // Complete immutable commercial document payload.
+  // Draft orders may regenerate this JSONB payload; confirmed orders render from it forever.
+  orderDocumentPayload  Json
+  snapshotSchemaVersion Int       @default(1)
   
   // Customer Snapshot (immutable)
   customerSnapshotName      String
@@ -418,6 +423,9 @@ model Invoice {
   discountAmount        Decimal? @db.Decimal(15, 2)
   notes                 String?
   correlationId         String?
+
+  // Complete immutable business document payload.
+  // Rendering uses this JSONB snapshot, while relational columns support search/reporting.
   documentSnapshot      Json
   snapshotSchemaVersion Int       @default(1)
   createdAt             DateTime  @default(now())

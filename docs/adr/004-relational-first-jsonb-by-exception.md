@@ -1,4 +1,4 @@
-# ADR 004: Relational First, JSONB by Exception
+# ADR 004: Relational for Operational Data. JSONB for Immutable Documents.
 
 ## Status
 
@@ -35,16 +35,38 @@ Using JSONB for all data would:
 
 ## Decision
 
-**Relational First, JSONB by Exception**
+**Relational for Operational Data. JSONB for Immutable Documents.**
 
-Relational tables remain the default storage strategy. JSONB is approved only when ALL of the following conditions are met:
+This is a frozen architectural rule:
 
-1. **Immutability**: The data is immutable after creation
-2. **Business Document/Payload**: The data represents a business document, snapshot, event, or payload
-3. **Schema Evolution**: The structure is expected to evolve over time
-4. **Non-Transactional**: The data is not the primary source for transactional queries
+```text
+Master Data
+  -> Relational
 
-If these conditions are not met, use relational tables.
+Operational Transactions
+  -> Relational
+
+Business Documents
+  -> Relational metadata
+  + JSONB immutable payload
+
+Execution Modules
+  -> Relational references
+  + Optional JSONB evidence/payloads
+```
+
+JSONB stores immutable evidence or documents, not operational state.
+
+### JSONB Decision Checklist
+
+Before introducing JSONB, every developer must answer YES to all:
+
+1. Is this data immutable after creation?
+2. Is it a business document, snapshot, event, or external payload?
+3. Is the structure expected to evolve?
+4. Is it not the primary target of transactional queries?
+
+If any answer is No, use relational tables.
 
 ### Data Classification
 
@@ -62,7 +84,37 @@ If these conditions are not met, use relational tables.
 - Import/Export Payloads: Data transfer formats
 - Audit Payloads: Complex audit trail data
 
+### Payload Enforcement
+
+- Business documents are invalid without a document payload.
+- Document payloads must never be empty or default to `{}`.
+- Document payloads are generated only by Document Builders.
+- If payload generation fails, document creation/update must fail.
+- Every document payload must include immutable metadata: `schemaVersion`, `generatedAt`, and `generatedBy`.
+
+### Frozen Module Strategy
+
+| Module | Relational | JSONB |
+| --- | --- | --- |
+| Customer | Yes | No |
+| Product | Yes | No |
+| Pricing | Yes | No |
+| Order | Yes | Yes, `orderDocumentPayload` |
+| Invoice | Yes | Yes, `documentSnapshot` |
+| Warehouse | Yes | Optional, `pickListSnapshot` |
+| Shipment | Yes | Optional, `carrierPayload`, `labelPayload` |
+| Delivery | Yes | Optional, `proofOfDelivery` |
+| Payment | Yes | Optional, `gatewayResponse` |
+| WhatsApp | Yes | Yes, `messagePayload` |
+| AI | Yes | Yes, `requestPayload`, `responsePayload` |
+
 ### Invoice Implementation
+
+**Schema Change:**
+- Remove invoice-level snapshot columns such as customer snapshot and order snapshot columns from `invoices`.
+- Add `documentSnapshot` as the complete immutable invoice document JSONB payload.
+- Add `snapshotSchemaVersion` as an integer with default `1`.
+- Keep relational fields needed for search, reporting, workflow, tenant isolation, and traceability.
 
 **Relational Columns (Search & Reporting):**
 - `tenantId` - Tenant isolation
@@ -92,12 +144,42 @@ If these conditions are not met, use relational tables.
 - Never join to live Customer, Product, Pricing, or Order for rendering
 - Relational columns are used for search, filtering, and reporting only
 
+### Decision Examples
+
+**Use relational tables for:**
+- Customer profile fields that users edit and search
+- Product SKU, name, unit, and active state
+- Customer-specific pricing and pricing versions
+- Invoice status workflow and invoice list filters
+- Payment amount, currency, and invoice settlement references
+
+**Use JSONB for:**
+- Complete invoice document snapshot
+- Immutable webhook request/response payloads
+- AI request/response payloads kept for audit or explanation
+- Import/export source payloads kept for traceability
+- Audit payloads that preserve historical context
+
+### Benefits
+
+- Keeps operational data queryable, constrained, and reportable
+- Keeps business documents self-contained and reproducible
+- Allows invoice document structure to evolve without rewriting old invoices
+- Avoids schema bloat from adding many one-off snapshot columns
+- Makes misuse of JSONB visible through explicit approval criteria
+
 ### Order Module
 
-Do not refactor Module 6 Order snapshots now.
+Order is a hybrid business document.
 
-Future Order snapshot migration may be evaluated in a future architecture version.
-Future document snapshots should follow this JSONB strategy.
+- Operational fields remain relational for workflow, search, reporting, tenant isolation, and traceability.
+- `orderDocumentPayload` stores the complete immutable commercial representation as JSONB.
+- `snapshotSchemaVersion` identifies the Order payload structure and defaults to `1`.
+- Draft Orders may regenerate `orderDocumentPayload` whenever the Order changes.
+- Confirmed Orders freeze `orderDocumentPayload` forever.
+- Order rendering must use `orderDocumentPayload`.
+
+Every business document owns an immutable JSONB payload. Operational fields remain relational. Business documents are rendered from the JSONB payload.
 
 ## Rationale
 
@@ -174,6 +256,6 @@ Future document snapshots should follow this JSONB strategy.
 ## Related Documents
 
 - [ADR 003: Business Document Independence](003-business-document-independence.md)
-- [ARCHITECTURE_V1_FINAL.md](../ARCHITECTURE_V1_FINAL.md)
+- [ARCHITECTURE_V1_FINAL.md](../../ARCHITECTURE_V1_FINAL.md)
 - [TECH_STACK.md](../TECH_STACK.md)
 - [RULES.md](../RULES.md)

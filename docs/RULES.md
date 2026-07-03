@@ -38,16 +38,43 @@ APIs should reflect user-facing business concepts (Edit Price, Issue Invoice) ra
 
 ## Data Storage Rule
 
-Relational tables are the default storage strategy. JSONB is approved only when ALL of the following conditions are met:
+Relational for Operational Data. JSONB for Immutable Documents.
 
-1. **Immutability**: The data is immutable after creation
-2. **Business Document/Payload**: The data represents a business document, snapshot, event, or payload
-3. **Schema Evolution**: The structure is expected to evolve over time
-4. **Non-Transactional**: The data is not the primary source for transactional queries
+This is a frozen architectural rule:
 
-If these conditions are not met, use relational tables.
+- Master Data -> Relational
+- Operational Transactions -> Relational
+- Business Documents -> Relational metadata + JSONB immutable payload
+- Execution Modules -> Relational references + optional JSONB evidence/payloads
 
-This is documented as "Relational First, JSONB by Exception." See [ADR 004: Relational First, JSONB by Exception](adr/004-relational-first-jsonb-by-exception.md) for detailed strategy.
+JSONB stores immutable evidence or documents, not operational state.
+
+### JSONB Decision Checklist
+
+Before introducing JSONB, every developer must answer YES to all:
+
+1. Is this data immutable after creation?
+2. Is it a business document, snapshot, event, or external payload?
+3. Is the structure expected to evolve?
+4. Is it not the primary target of transactional queries?
+
+If any answer is No, use relational tables.
+
+This is documented in [ADR 004: Relational for Operational Data. JSONB for Immutable Documents.](adr/004-relational-first-jsonb-by-exception.md).
+
+JSONB is preferred only for immutable business document snapshots, immutable historical payloads, external webhook payloads, AI request/response payloads, import/export payloads, and audit payloads.
+
+JSONB is not preferred for Customer, Product, Pricing, User, Warehouse, Shipment, Payment, Status, or Lookup tables.
+
+Invoices use a hybrid persistence strategy: operational fields remain relational, and the complete immutable invoice document is stored in `documentSnapshot` with `snapshotSchemaVersion`.
+
+Invoice rendering must use `documentSnapshot`.
+
+Orders use a hybrid persistence strategy: operational fields remain relational, and the complete immutable commercial document is stored in `orderDocumentPayload` with `snapshotSchemaVersion`.
+
+Order rendering must use `orderDocumentPayload`.
+
+Draft Orders may regenerate `orderDocumentPayload` whenever the Order changes. Confirmed Orders freeze `orderDocumentPayload` forever.
 
 ## Document Builder Rule
 
@@ -71,4 +98,3 @@ This rule keeps services small and maintainable as the product grows. When multi
 - [DOMAIN](DOMAIN.md)
 - [ROADMAP](ROADMAP.md)
 - [RELEASES](RELEASES.md)
-

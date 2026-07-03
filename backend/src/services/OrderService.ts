@@ -3,6 +3,7 @@ import { OrderValidator } from '../validation/OrderValidator';
 import { CustomerRepository } from '../repositories/CustomerRepository';
 import { ProductRepository } from '../repositories/ProductRepository';
 import { PricingRepository } from '../repositories/PricingRepository';
+import { OrderDocumentBuilder } from '../builders/OrderDocumentBuilder';
 
 export interface CreateOrderInput {
   tenantId: string;
@@ -38,7 +39,8 @@ export class OrderService {
     private orderRepository: OrderRepository,
     private customerRepository: CustomerRepository,
     private productRepository: ProductRepository,
-    private pricingRepository: PricingRepository
+    private pricingRepository: PricingRepository,
+    private orderDocumentBuilder = new OrderDocumentBuilder(orderRepository)
   ) {}
 
   async createOrder(input: CreateOrderInput) {
@@ -111,6 +113,8 @@ export class OrderService {
       createdBy: input.createdBy,
     } as any);
 
+    await this.refreshOrderDocumentPayload(order.id, input.createdBy);
+
     return this.orderRepository.findById(order.id);
   }
 
@@ -181,10 +185,12 @@ export class OrderService {
     }
 
     // Update order
-    return this.orderRepository.update(id, {
+    await this.orderRepository.update(id, {
       notes: input.notes,
       updatedBy: input.updatedBy,
     });
+
+    return this.refreshOrderDocumentPayload(id, input.updatedBy);
   }
 
   async confirmOrder(id: string, updatedBy?: string) {
@@ -212,8 +218,10 @@ export class OrderService {
       throw new Error('Confirmed status not found');
     }
 
-    // Update order status to confirmed
-    return this.orderRepository.updateStatus(id, confirmedStatus.id, updatedBy);
+    const orderDocumentPayload = await this.orderDocumentBuilder.build(id);
+
+    // Update order status and freeze document payload for rendering.
+    return this.orderRepository.updateStatusAndDocumentPayload(id, confirmedStatus.id, orderDocumentPayload as any, updatedBy);
   }
 
   async cancelOrder(id: string, updatedBy?: string) {
@@ -300,6 +308,7 @@ export class OrderService {
     const currentItems = await this.orderRepository.findOrderItemsByOrderId(orderId);
     const newTotal = currentItems.reduce((sum, item) => sum + Number(item.lineTotal), 0);
     await this.orderRepository.update(orderId, { totalAmount: newTotal } as any);
+    await this.refreshOrderDocumentPayload(orderId, input.createdBy);
 
     return orderItem;
   }
@@ -339,6 +348,8 @@ export class OrderService {
       await this.orderRepository.update(order.id, { totalAmount: newTotal } as any);
     }
 
+    await this.refreshOrderDocumentPayload(order.id, input.updatedBy);
+
     return updatedItem;
   }
 
@@ -367,6 +378,7 @@ export class OrderService {
     const currentItems = await this.orderRepository.findOrderItemsByOrderId(order.id);
     const newTotal = currentItems.reduce((sum, item) => sum + Number(item.lineTotal), 0);
     await this.orderRepository.update(order.id, { totalAmount: newTotal } as any);
+    await this.refreshOrderDocumentPayload(order.id);
 
     return orderItem;
   }
@@ -380,5 +392,10 @@ export class OrderService {
     // For Module 6, history is simply the current order with items
     // Future modules may add version history
     return this.orderRepository.findByIdWithItems(orderId);
+  }
+
+  private async refreshOrderDocumentPayload(orderId: string, updatedBy?: string) {
+    const orderDocumentPayload = await this.orderDocumentBuilder.build(orderId);
+    return this.orderRepository.updateDocumentPayload(orderId, orderDocumentPayload as any, updatedBy);
   }
 }

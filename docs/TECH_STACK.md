@@ -40,14 +40,29 @@ When choosing technology, follow these principles:
 
 **Data Storage Strategy:**
 
-**Relational First, JSONB by Exception:**
+**Relational for Operational Data. JSONB for Immutable Documents:**
 
-Relational tables are the default storage strategy. JSONB is approved only when ALL of the following conditions are met:
+This is a frozen architectural rule:
 
-1. **Immutability**: The data is immutable after creation
-2. **Business Document/Payload**: The data represents a business document, snapshot, event, or payload
-3. **Schema Evolution**: The structure is expected to evolve over time
-4. **Non-Transactional**: The data is not the primary source for transactional queries
+```text
+Master Data -> Relational
+Operational Transactions -> Relational
+Business Documents -> Relational metadata + JSONB immutable payload
+Execution Modules -> Relational references + optional JSONB evidence/payloads
+```
+
+JSONB stores immutable evidence or documents, not operational state.
+
+**JSONB Decision Checklist:**
+
+Before introducing JSONB, every developer must answer YES to all:
+
+1. Is this data immutable after creation?
+2. Is it a business document, snapshot, event, or external payload?
+3. Is the structure expected to evolve?
+4. Is it not the primary target of transactional queries?
+
+If any answer is No, use relational tables.
 
 **Relational Storage (Default):**
 - Master Data: Customer, Product, Pricing
@@ -63,7 +78,14 @@ Relational tables are the default storage strategy. JSONB is approved only when 
 - Import/Export Payloads: Data transfer formats
 - Audit Payloads: Complex audit trail data
 
-See [ADR 004: Relational First, JSONB by Exception](adr/004-relational-first-jsonb-by-exception.md) for detailed strategy.
+**Prisma/PostgreSQL Guidance:**
+- Prisma `Json` fields map to PostgreSQL JSONB in this stack.
+- New JSONB columns require architecture approval and must cite the JSONB Decision Checklist.
+- Business document rendering reads the JSONB document snapshot, while search and reporting use relational columns.
+- Do not add JSONB to master data tables such as Customer, Product, Pricing, User, Warehouse, Shipment, Payment, status, or lookup tables.
+- Order uses `orderDocumentPayload` for its immutable commercial document payload.
+
+See [ADR 004: Relational for Operational Data. JSONB for Immutable Documents.](adr/004-relational-first-jsonb-by-exception.md) for detailed strategy.
 
 **Avoid:** NoSQL databases (MongoDB, Cassandra) - not needed for relational ERP data
 

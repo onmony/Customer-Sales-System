@@ -8,6 +8,13 @@ export interface OrderRepository {
   findByCustomerId(tenantId: string, customerId: string, params?: { skip?: number; take?: number }): Promise<any[]>;
   create(data: Prisma.OrderCreateInput): Promise<any>;
   update(id: string, data: Prisma.OrderUpdateInput): Promise<any>;
+  updateDocumentPayload(id: string, orderDocumentPayload: Prisma.InputJsonValue, updatedBy?: string): Promise<any>;
+  updateStatusAndDocumentPayload(
+    id: string,
+    statusId: string,
+    orderDocumentPayload: Prisma.InputJsonValue,
+    updatedBy?: string
+  ): Promise<any>;
   updateStatus(id: string, statusId: string, updatedBy?: string): Promise<any>;
   delete(id: string): Promise<any>;
   softDelete(id: string): Promise<any>;

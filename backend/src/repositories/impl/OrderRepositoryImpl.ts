@@ -114,6 +114,37 @@ export class OrderRepositoryImpl implements OrderRepository {
     });
   }
 
+  async updateDocumentPayload(id: string, orderDocumentPayload: any, updatedBy?: string) {
+    return prisma.order.update({
+      where: { id },
+      data: {
+        orderDocumentPayload,
+        ...(updatedBy !== undefined && { updatedBy }),
+      },
+      include: {
+        tenant: true,
+        customer: true,
+        status: true,
+      },
+    });
+  }
+
+  async updateStatusAndDocumentPayload(id: string, statusId: string, orderDocumentPayload: any, updatedBy?: string) {
+    return prisma.order.update({
+      where: { id },
+      data: {
+        statusId,
+        orderDocumentPayload,
+        updatedBy,
+      },
+      include: {
+        tenant: true,
+        customer: true,
+        status: true,
+      },
+    });
+  }
+
   async updateStatus(id: string, statusId: string, updatedBy?: string) {
     return prisma.order.update({
       where: { id },

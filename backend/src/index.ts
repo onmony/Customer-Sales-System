@@ -19,6 +19,7 @@ import { createPricingRoutes } from './routes/pricingRoutes';
 import { OrderController } from './controllers/OrderController';
 import { OrderService } from './services/OrderService';
 import { OrderRepositoryImpl } from './repositories/impl/OrderRepositoryImpl';
+import { OrderDocumentBuilder } from './builders/OrderDocumentBuilder';
 import { createOrderRoutes } from './routes/orderRoutes';
 import { InvoiceController } from './controllers/InvoiceController';
 import { InvoiceService } from './services/InvoiceService';
@@ -45,7 +46,14 @@ const pricingService = new PricingService(pricingRepository);
 const pricingController = new PricingController(pricingService);
 
 const orderRepository = new OrderRepositoryImpl();
-const orderService = new OrderService(orderRepository, customerRepository, productRepository, pricingRepository);
+const orderDocumentBuilder = new OrderDocumentBuilder(orderRepository);
+const orderService = new OrderService(
+  orderRepository,
+  customerRepository,
+  productRepository,
+  pricingRepository,
+  orderDocumentBuilder
+);
 const orderController = new OrderController(orderService);
 
 const invoiceRepository = new InvoiceRepositoryImpl();

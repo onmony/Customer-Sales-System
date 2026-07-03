@@ -42,7 +42,7 @@ Customer → Order → Pricing Resolution → Invoice → Warehouse → Shipment
 - ADR 001: Business Actions vs System Versioning
 - ADR 002: Phase-Aware Order Workflow
 - ADR 003: Business Document Independence
-- ADR 004: Relational First, JSONB by Exception
+- ADR 004: Relational for Operational Data. JSONB for Immutable Documents.
 
 ### Technical Standards
 
@@ -140,14 +140,38 @@ Customer → Order → Pricing Resolution → Invoice → Warehouse → Shipment
 
 ### Data Storage Strategy
 
-**Relational First, JSONB by Exception:**
+**Relational for Operational Data. JSONB for Immutable Documents:**
 
-Relational tables are the default storage strategy. JSONB is approved only when ALL of the following conditions are met:
+This is a frozen architectural rule:
 
-1. **Immutability**: The data is immutable after creation
-2. **Business Document/Payload**: The data represents a business document, snapshot, event, or payload
-3. **Schema Evolution**: The structure is expected to evolve over time
-4. **Non-Transactional**: The data is not the primary source for transactional queries
+```text
+Master Data
+  -> Relational
+
+Operational Transactions
+  -> Relational
+
+Business Documents
+  -> Relational metadata
+  + JSONB immutable payload
+
+Execution Modules
+  -> Relational references
+  + Optional JSONB evidence/payloads
+```
+
+JSONB stores immutable evidence or documents, not operational state.
+
+**JSONB Decision Checklist:**
+
+Before introducing JSONB, every developer must answer YES to all:
+
+1. Is this data immutable after creation?
+2. Is it a business document, snapshot, event, or external payload?
+3. Is the structure expected to evolve?
+4. Is it not the primary target of transactional queries?
+
+If any answer is No, use relational tables.
 
 **Relational Storage (Default):**
 - Master Data: Customer, Product, Pricing
@@ -163,7 +187,43 @@ Relational tables are the default storage strategy. JSONB is approved only when 
 - Import/Export Payloads: Data transfer formats
 - Audit Payloads: Complex audit trail data
 
-See [ADR 004: Relational First, JSONB by Exception](docs/adr/004-relational-first-jsonb-by-exception.md) for detailed strategy.
+**Frozen Module Strategy:**
+
+| Module | Relational | JSONB |
+| --- | --- | --- |
+| Customer | Yes | No |
+| Product | Yes | No |
+| Pricing | Yes | No |
+| Order | Yes | Yes, `orderDocumentPayload` |
+| Invoice | Yes | Yes, `documentSnapshot` |
+| Warehouse | Yes | Optional, `pickListSnapshot` |
+| Shipment | Yes | Optional, `carrierPayload`, `labelPayload` |
+| Delivery | Yes | Optional, `proofOfDelivery` |
+| Payment | Yes | Optional, `gatewayResponse` |
+| WhatsApp | Yes | Yes, `messagePayload` |
+| AI | Yes | Yes, `requestPayload`, `responsePayload` |
+
+**Invoice Persistence Contract:**
+- Relational columns support search, reporting, tenant isolation, status workflow, and traceability: `tenantId`, `customerId`, `orderId`, `invoiceNumber`, `statusId`, `issuedAt`, `dueDate`, `totalAmount`, `taxAmount`, `discountAmount`, `currency`, and `correlationId`.
+- `documentSnapshot` stores the complete immutable invoice document as JSONB, including customer snapshot, order snapshot, invoice line items, pricing snapshot, totals, currency, and reproduction metadata.
+- `snapshotSchemaVersion` identifies the JSONB document structure and defaults to `1`.
+- Invoice rendering must use `documentSnapshot`; it must not join to live Customer, Product, Pricing, or Order data to reproduce an issued invoice.
+
+**Order Persistence Contract:**
+- Order is a hybrid business document.
+- Relational columns support workflow, search, reporting, tenant isolation, and traceability: `tenantId`, `customerId`, `statusId`, `orderNumber`, `currency`, `totalAmount`, timestamps, and audit fields.
+- `orderDocumentPayload` stores the complete immutable commercial representation as JSONB, including customer snapshot, order header, line items, pricing snapshots, totals, and reproduction metadata.
+- `snapshotSchemaVersion` identifies the JSONB document structure and defaults to `1`.
+- Draft Orders may regenerate `orderDocumentPayload` whenever the Order changes.
+- Confirmed Orders freeze `orderDocumentPayload` forever.
+- Order rendering must use `orderDocumentPayload`.
+
+**Business Document Rendering Principle:**
+- Every business document owns an immutable JSONB payload.
+- Operational fields remain relational.
+- Business documents are rendered from the JSONB payload.
+
+See [ADR 004: Relational for Operational Data. JSONB for Immutable Documents.](docs/adr/004-relational-first-jsonb-by-exception.md) for detailed strategy.
 
 ### Dependencies
 
