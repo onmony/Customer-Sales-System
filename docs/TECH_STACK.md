@@ -38,6 +38,33 @@ When choosing technology, follow these principles:
 - Free and open-source
 - Easy to host on any cloud provider
 
+**Data Storage Strategy:**
+
+**Relational First, JSONB by Exception:**
+
+Relational tables are the default storage strategy. JSONB is approved only when ALL of the following conditions are met:
+
+1. **Immutability**: The data is immutable after creation
+2. **Business Document/Payload**: The data represents a business document, snapshot, event, or payload
+3. **Schema Evolution**: The structure is expected to evolve over time
+4. **Non-Transactional**: The data is not the primary source for transactional queries
+
+**Relational Storage (Default):**
+- Master Data: Customer, Product, Pricing
+- Operational Data: User, Warehouse, Shipment, Payment
+- Reference Data: Status tables, Lookup tables
+- Transactional Data: Any data requiring complex queries, joins, or constraints
+
+**JSONB Storage (Exception):**
+- Business Document Snapshots: Order snapshots, Invoice documentSnapshot
+- Immutable Historical Payloads: Historical records that must not change
+- External Webhook Payloads: Incoming/outgoing webhook data
+- AI Request/Response Payloads: AI interaction history
+- Import/Export Payloads: Data transfer formats
+- Audit Payloads: Complex audit trail data
+
+See [ADR 004: Relational First, JSONB by Exception](adr/004-relational-first-jsonb-by-exception.md) for detailed strategy.
+
 **Avoid:** NoSQL databases (MongoDB, Cassandra) - not needed for relational ERP data
 
 ### ORM

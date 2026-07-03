@@ -36,6 +36,32 @@ Expose business actions, not technical operations.
 
 APIs should reflect user-facing business concepts (Edit Price, Issue Invoice) rather than technical implementation details (activate version, deactivate version, manage state). Technical concerns like versioning, history, and audit must be handled internally by the system.
 
+## Data Storage Rule
+
+Relational tables are the default storage strategy. JSONB is approved only when ALL of the following conditions are met:
+
+1. **Immutability**: The data is immutable after creation
+2. **Business Document/Payload**: The data represents a business document, snapshot, event, or payload
+3. **Schema Evolution**: The structure is expected to evolve over time
+4. **Non-Transactional**: The data is not the primary source for transactional queries
+
+If these conditions are not met, use relational tables.
+
+This is documented as "Relational First, JSONB by Exception." See [ADR 004: Relational First, JSONB by Exception](adr/004-relational-first-jsonb-by-exception.md) for detailed strategy.
+
+## Document Builder Rule
+
+Complex document construction must live in a Builder, not in Services.
+
+**Services orchestrate. Builders construct.**
+
+Examples:
+- OrderSnapshotBuilder
+- InvoiceSnapshotBuilder
+- ShipmentDocumentBuilder (future)
+
+This rule keeps services small and maintainable as the product grows. When multiple sources need to generate the same document type (e.g., invoices from Manual Orders, WhatsApp Orders, API Orders, Imported Orders), a single Builder ensures one source of truth for document structure and construction logic.
+
 ## Related Documents
 
 - [MASTER_SKILL](MASTER_SKILL.md)

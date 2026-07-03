@@ -20,6 +20,10 @@ import { OrderController } from './controllers/OrderController';
 import { OrderService } from './services/OrderService';
 import { OrderRepositoryImpl } from './repositories/impl/OrderRepositoryImpl';
 import { createOrderRoutes } from './routes/orderRoutes';
+import { InvoiceController } from './controllers/InvoiceController';
+import { InvoiceService } from './services/InvoiceService';
+import { InvoiceRepositoryImpl } from './repositories/impl/InvoiceRepositoryImpl';
+import { createInvoiceRoutes } from './routes/invoiceRoutes';
 
 const app = express();
 
@@ -44,12 +48,17 @@ const orderRepository = new OrderRepositoryImpl();
 const orderService = new OrderService(orderRepository, customerRepository, productRepository, pricingRepository);
 const orderController = new OrderController(orderService);
 
+const invoiceRepository = new InvoiceRepositoryImpl();
+const invoiceService = new InvoiceService(invoiceRepository, orderRepository, customerRepository, productRepository, pricingRepository);
+const invoiceController = new InvoiceController(invoiceService);
+
 // Routes
 app.use('/health', healthRoutes);
 app.use('/api', createCustomerRoutes(customerController));
 app.use('/api', createProductRoutes(productController));
 app.use('/api', createPricingRoutes(pricingController));
 app.use('/api', createOrderRoutes(orderController));
+app.use('/api', createInvoiceRoutes(invoiceController));
 
 // Error handling
 app.use(notFoundHandler);

@@ -12,75 +12,236 @@ Business source: [Invoice V1](VERSIONS/V1.md).
 
 - Invoice
 - Invoice item
-- Invoice customer snapshot
-- Invoice product snapshot
-- Invoice pricing snapshot
+- Invoice documentSnapshot (JSONB)
 - Invoice source order reference
 
 ## Commands
 
-### Create Invoice From Order
+### Generate Invoice From Order
 
-Creates an invoice from a saved, invoice-ready order in the current tenant.
+**Endpoint:** `POST /api/invoices/generate/:orderId`
 
-Business rules: [INV-1](VERSIONS/V1.md#inv-1-tenant-scope), [INV-2](VERSIONS/V1.md#inv-2-source-order-required), [INV-3](VERSIONS/V1.md#inv-3-order-invoice-readiness), [INV-4](VERSIONS/V1.md#inv-4-invoice-items-required), [INV-5](VERSIONS/V1.md#inv-5-snapshot-required).
+**Description:** Creates a draft invoice from a saved, invoice-ready (Confirmed) order in the current tenant.
+
+**Request Body:**
+```json
+{
+  "tenantId": "string",
+  "createdBy": "string (optional)"
+}
+```
+
+**Response:** Invoice object with items
+
+**Business Rules:**
+- [INV-1](VERSIONS/V1.md#inv-1-tenant-scope): Tenant scope
+- [INV-2](VERSIONS/V1.md#inv-2-source-order-required): Source order required
+- [INV-3](VERSIONS/V1.md#inv-3-order-invoice-readiness): Order must be Confirmed
+- [INV-4](VERSIONS/V1.md#inv-4-invoice-items-required): Invoice items required
+- [INV-5](VERSIONS/V1.md#inv-5-snapshot-required): Snapshot required (documentSnapshot)
+- Only one active invoice may exist for an order
 
 ### Issue Invoice
 
-Marks an invoice as issued when required invoice data and snapshots exist.
+**Endpoint:** `POST /api/invoices/:id/issue`
 
-Business rules: [INV-6](VERSIONS/V1.md#inv-6-issue-invoice), [INV-7](VERSIONS/V1.md#inv-7-issued-invoice-immutability).
+**Description:** Marks a draft invoice as issued when required invoice data and snapshots exist.
+
+**Request Body:**
+```json
+{
+  "issuedBy": "string (optional)"
+}
+```
+
+**Response:** Updated invoice object
+
+**Business Rules:**
+- [INV-6](VERSIONS/V1.md#inv-6-issue-invoice): Issue invoice
+- [INV-7](VERSIONS/V1.md#inv-7-issued-invoice-immutability): Issued invoice immutability
+- Only Draft invoices can be issued
+- Issued invoices cannot be edited
+
+### Cancel Draft Invoice
+
+**Endpoint:** `POST /api/invoices/:id/cancel`
+
+**Description:** Cancels a draft invoice.
+
+**Request Body:**
+```json
+{
+  "cancelledBy": "string (optional)"
+}
+```
+
+**Response:** Updated invoice object
+
+**Business Rules:**
+- Only Draft invoices can be cancelled
+- Issued invoices cannot be cancelled
 
 ## Queries
 
 ### Get Invoice
 
-Returns one invoice in the current tenant.
+**Endpoint:** `GET /api/invoices/:id`
+
+**Description:** Returns one invoice in the current tenant with items.
+
+**Response:** Invoice object with invoiceItems
+
+### List Invoices
+
+**Endpoint:** `GET /api/invoices`
+
+**Description:** Returns invoices in the current tenant.
+
+**Query Parameters:**
+- `tenantId` (required): Tenant ID
+- `skip` (optional): Pagination offset
+- `take` (optional): Pagination limit (max 100)
+
+**Response:** Array of invoice objects
 
 ### List Customer Invoices
 
-Returns invoices associated with one customer in the current tenant.
+**Endpoint:** `GET /api/invoices/customer/:customerId`
 
-### List Order Invoices
+**Description:** Returns invoices associated with one customer in the current tenant.
 
-Returns invoices created from one order in the current tenant.
+**Query Parameters:**
+- `tenantId` (required): Tenant ID
+- `skip` (optional): Pagination offset
+- `take` (optional): Pagination limit (max 100)
 
-### Check Invoice Issue Readiness
+**Response:** Array of invoice objects
 
-Returns whether an invoice has the required items and snapshots for issue.
+### Get Invoice By Order
+
+**Endpoint:** `GET /api/invoices/order/:orderId`
+
+**Description:** Returns invoices created from one order in the current tenant.
+
+**Query Parameters:**
+- `tenantId` (required): Tenant ID
+
+**Response:** Invoice object
+
+### Get Invoice History
+
+**Endpoint:** `GET /api/invoices/history/:id`
+
+**Description:** Returns the current invoice with items. No revision history in Version 1.
+
+**Response:** Invoice object with invoiceItems
 
 ## Validation
 
-- Tenant context is required.
-- Source order must be saved.
-- Source order must contain pricing snapshots.
-- Issued invoices cannot be edited.
-- Source order must belong to the same tenant.
-- Invoice items are required before issue.
-- Required snapshots are required before issue.
-- Draft, numbering, cancellation, and credit-note behavior are pending business approval.
+- Tenant context is required
+- Source order must be saved
+- Source order must be Confirmed
+- Invoice must not already exist for the order
+- Issued invoices cannot be edited
+- Source order must belong to the same tenant
+- Invoice items are required before issue
+- Required snapshots (documentSnapshot) are required before issue
+- Draft invoices may be cancelled
+- Issued invoices are immutable
+- Tenant isolation enforced
+- Audit columns tracked
+- Soft delete supported
 
 ## Error Categories
 
-- Missing tenant context.
-- Cross-tenant access.
-- Missing source order.
-- Source order not saved.
-- Source order not invoice-ready.
-- Missing invoice items.
-- Missing invoice snapshots.
-- Issued invoice is immutable.
-- Invoice lifecycle policy not approved.
+- Missing tenant context
+- Cross-tenant access
+- Missing source order
+- Source order not saved
+- Source order not Confirmed
+- Invoice already exists for order
+- Missing invoice items
+- Missing invoice snapshots
+- Issued invoice is immutable
+- Invoice lifecycle policy not approved
+
+## Invoice Numbering
+
+**Strategy:** Server-generated, sequential, tenant-scoped
+
+- Invoice numbers are generated by the system
+- Client does not provide invoice numbers
+- Simple sequential strategy per tenant
+- Starts at 1 for each tenant
+- Incremented for each new invoice
+
+## Document Snapshot
+
+**Storage:** JSONB field `documentSnapshot`
+
+**Structure:**
+```json
+{
+  "customer": {
+    "id": "string",
+    "name": "string",
+    "gstNumber": "string (optional)",
+    "billingAddress": "object (optional)",
+    "shippingAddress": "object (optional)"
+  },
+  "order": {
+    "id": "string",
+    "orderNumber": "string",
+    "orderDate": "string (ISO 8601)",
+    "totalAmount": "number",
+    "currency": "string"
+  },
+  "items": [
+    {
+      "productId": "string",
+      "product": {
+        "code": "string",
+        "name": "string",
+        "unit": "string"
+      },
+      "quantity": "number",
+      "unitPrice": "number",
+      "lineTotal": "number",
+      "currency": "string",
+      "pricing": {
+        "version": "number",
+        "effectiveDate": "string (ISO 8601)",
+        "source": "string"
+      }
+    }
+  ],
+  "totals": {
+    "totalAmount": "number",
+    "currency": "string",
+    "taxAmount": "number",
+    "discountAmount": "number"
+  },
+  "metadata": {
+    "generatedAt": "string (ISO 8601)",
+    "generatedFrom": "order",
+    "orderId": "string",
+    "orderNumber": "string"
+  }
+}
+```
+
+**Rendering:** Invoice rendering must use `documentSnapshot` only. Never read live Customer, Product, Pricing, or Order data.
 
 ## Non-Goals
 
-- No implementation code.
-- No database schema.
-- No framework selection.
-- No payment collection.
-- No tax filing.
-- No accounting ledger posting.
-- No e-invoicing.
+- No implementation code
+- No database schema
+- No framework selection
+- No payment collection
+- No tax filing
+- No accounting ledger posting
+- No e-invoicing
+- No PDF generation (placeholder only)
 
 ## Related Documents
 
@@ -94,3 +255,5 @@ Returns whether an invoice has the required items and snapshots for issue.
 - [Test Cases](TEST_CASES.md)
 - [Evolution](VERSIONS/EVOLUTION.md)
 - [Order API](../order/API.md)
+- [ADR 003: Business Document Independence](../../adr/003-business-document-independence.md)
+- [ADR 004: Relational First, JSONB by Exception](../../adr/004-relational-first-jsonb-by-exception.md)

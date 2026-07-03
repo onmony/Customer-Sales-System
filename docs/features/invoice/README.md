@@ -20,6 +20,10 @@ Business rules are defined in [Invoice V1](VERSIONS/V1.md). They are summarized 
 - An invoice is created from a saved order.
 - The source order must be invoice-ready.
 - Invoice items preserve required customer, product, quantity, and pricing snapshots.
+- Invoice must be completely self-contained and independently reproducible.
+- Invoice is generated from Order snapshot once and becomes completely independent.
+- Invoice rendering must use Invoice snapshot only.
+- Invoice must never depend on live Customer, Product, Pricing, or Order data.
 - An issued invoice is immutable.
 - Later customer, product, pricing, or order changes must not rewrite an issued invoice.
 - Cross-tenant invoice access is forbidden.

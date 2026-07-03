@@ -404,30 +404,35 @@ model OrderItem {
 }
 
 model Invoice {
-  id            String    @id @default(uuid())
-  tenantId      String
-  orderId       String
-  customerId    String
-  invoiceNumber String
-  issuedAt      DateTime?
-  dueDate       DateTime?
-  statusId      String
-  totalAmount   Decimal   @default(0) @db.Decimal(15, 2)
-  currency      String    @default("INR")
-  notes         String?
-  correlationId String?
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-  createdBy     String?
-  updatedBy     String?
-  deletedAt     DateTime?
+  id                    String    @id @default(uuid())
+  tenantId              String
+  orderId               String
+  customerId            String
+  invoiceNumber         String
+  issuedAt              DateTime?
+  dueDate               DateTime?
+  statusId              String
+  totalAmount           Decimal   @default(0) @db.Decimal(15, 2)
+  currency              String    @default("INR")
+  taxAmount             Decimal?  @db.Decimal(15, 2)
+  discountAmount        Decimal? @db.Decimal(15, 2)
+  notes                 String?
+  correlationId         String?
+  documentSnapshot      Json
+  snapshotSchemaVersion Int       @default(1)
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+  createdBy             String?
+  updatedBy             String?
+  deletedAt             DateTime?
 
   // Relations
-  tenant   Tenant        @relation(fields: [tenantId], references: [id], onDelete: Cascade)
-  order    Order         @relation(fields: [orderId], references: [id], onDelete: Cascade)
-  customer Customer      @relation(fields: [customerId], references: [id], onDelete: Cascade)
-  status   InvoiceStatus @relation(fields: [statusId], references: [id])
-  payments Payment[]
+  tenant        Tenant        @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  order         Order         @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  customer      Customer      @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  status        InvoiceStatus @relation(fields: [statusId], references: [id])
+  payments      Payment[]
+  invoiceItems  InvoiceItem[]
 
   @@unique([tenantId, invoiceNumber])
   @@index([tenantId])
@@ -438,6 +443,45 @@ model Invoice {
   @@index([statusId])
   @@index([deletedAt])
   @@map("invoices")
+}
+
+model InvoiceItem {
+  id          String   @id @default(uuid())
+  invoiceId   String
+  productId   String
+  quantity    Decimal  @db.Decimal(15, 2)
+  unitPrice   Decimal  @db.Decimal(15, 2)
+  lineTotal   Decimal  @db.Decimal(15, 2)
+  currency    String
+  notes       String?
+  taxRate     Decimal? @db.Decimal(5, 2)
+  taxAmount   Decimal? @db.Decimal(15, 2)
+  hsnSac      String?
+  correlationId String?
+
+  // Product Snapshot (immutable)
+  productSnapshotCode   String
+  productSnapshotName   String
+  productSnapshotUnit   String
+
+  // Pricing Snapshot (immutable)
+  pricingSnapshotVersion       Int
+  pricingSnapshotEffectiveDate DateTime
+  pricingSnapshotCurrency      String
+  pricingSnapshotSource        String
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  createdBy   String?
+  updatedBy   String?
+  deletedAt   DateTime?
+
+  invoice Invoice @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+
+  @@index([invoiceId])
+  @@index([productId])
+  @@index([deletedAt])
+  @@map("invoice_items")
 }
 
 model WarehouseRequest {
