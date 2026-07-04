@@ -1,13 +1,23 @@
 # Authentication Architecture
 
+This document describes the target frontend architecture for the project.
+
+The current implementation may not yet reflect this architecture.
+
+The implementation will progressively align with this document beginning in Module 9.
+
 This document defines how the frontend handles user identity.
+
+The frontend authentication contract will be finalized during Module 9 together with the backend authentication implementation.
+
+Until authentication architecture is approved, this document does not assume cookies, Local Storage, Session Storage, or memory-only tokens.
 
 ## Login Flow
 
 1.  User submits credentials via the public Login route.
 2.  The API layer transmits credentials to the backend.
-3.  Upon success, the backend returns a secure token (e.g., JWT).
-4.  The frontend stores the token securely.
+3.  Upon success, the backend returns the approved authentication response.
+4.  The frontend stores or maintains authentication state according to the approved Module 9 contract.
 5.  The frontend redirects the user to the default Workspace (Dashboard).
 
 ## Session Lifecycle
@@ -29,6 +39,6 @@ If any API request returns a `401 Unauthorized` status (handled by the API Layer
 ## Logout
 
 When the user explicitly initiates a logout:
-1.  The frontend calls the backend logout endpoint to invalidate the session server-side.
+1.  The frontend follows the approved Module 9 logout contract.
 2.  The frontend clears all local tokens, user data, and application state.
 3.  The user is redirected to the Login route.

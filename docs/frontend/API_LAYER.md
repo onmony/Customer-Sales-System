@@ -1,5 +1,11 @@
 # API Layer Architecture
 
+This document describes the target frontend architecture for the project.
+
+The current implementation may not yet reflect this architecture.
+
+The implementation will progressively align with this document beginning in Module 9.
+
 The API layer is the sole bridge between the React frontend and the backend.
 
 ## Core Principles
@@ -11,7 +17,9 @@ The API layer only requests, formats, and transmits data. It does not validate b
 All requests and responses must be strictly typed using TypeScript interfaces that mirror the backend domain models. There must be no `any` types in the API boundary.
 
 ### Request Pipeline
-All HTTP requests must pass through a centralized API client instance (e.g., Axios instance or configured fetch wrapper). Components must never instantiate naked `fetch()` calls.
+All HTTP requests must pass through a centralized API client instance. Components must never instantiate naked `fetch()` calls.
+
+The approved API client implementation will be selected during Module 9.
 
 ### Interceptors
 *   **Request Interceptor:** Automatically injects authentication tokens and required headers (e.g., Content-Type, Accept) into every outgoing request.

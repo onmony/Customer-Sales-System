@@ -40,9 +40,9 @@ A robust application must clearly communicate its current state to the user. Thi
 
 State transitions must be logical and protect data integrity.
 
-*   **View → Edit:** Initiated by user action.
-*   **Edit → View:** Initiated by "Cancel" (discards changes) or "Save" (commits changes, transitions to Success transiently, then View).
-*   **Create → Draft:** Initiated by "Save as Draft" or auto-save mechanisms.
-*   **Draft → Edit:** Initiated by user action to continue working.
-*   **Edit → Error:** Initiated by a failed validation upon attempting to Save. Returns user to Edit state with errors highlighted.
-*   **Loading → (View, Error, Empty):** The required transitions upon completion of an async request.
+*   **View -> Edit:** Initiated by user action.
+*   **Edit -> View:** Initiated by "Cancel" (discards changes) or "Save" (commits changes, transitions to Success transiently, then View).
+*   **Create -> Draft:** Initiated by "Save as Draft" or auto-save mechanisms.
+*   **Draft -> Edit:** Initiated by user action to continue working.
+*   **Edit -> Error:** Initiated by a failed validation upon attempting to Save. Returns user to Edit state with errors highlighted.
+*   **Loading -> (View, Error, Empty):** The required transitions upon completion of an async request.

@@ -23,4 +23,4 @@ This document outlines the principles governing the foundational building blocks
 
 ### Z-Index Philosophy
 *   **Philosophy:** The stacking order must be predictable and tightly controlled to prevent rendering collisions.
-*   **Hierarchy (Lowest to Highest):** Base layout (Sidebar/Content) → Fixed Headers → Dropdowns/Popovers → Drawers/Context Panels → Modals → Global Toasts/Notifications.
+*   **Hierarchy (Lowest to Highest):** Base layout (Sidebar/Content) -> Fixed Headers -> Dropdowns/Popovers -> Drawers/Context Panels -> Modals -> Global Toasts/Notifications.

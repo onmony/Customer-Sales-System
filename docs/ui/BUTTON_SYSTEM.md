@@ -14,7 +14,10 @@ Buttons indicate actions. Their visual weight must perfectly correspond to the i
 
 ### Destructive Action
 *   **Usage:** Actions that result in data loss or significant, irreversible changes (e.g., "Delete Order", "Void Invoice").
-*   **Philosophy:** Must be immediately recognizable (typically utilizing the semantic Error/Warning color) and usually requires a secondary confirmation step.
+*   **Philosophy:** Must be immediately recognizable (typically utilizing the semantic Error/Warning color). Confirmation dialogs are required for irreversible or high-impact business actions.
+*   **Undo Rule:** Undo is preferred for reversible actions where technically feasible. Business rules determine whether an action is reversible.
+*   **Undo Examples:** Remove draft item; restore recently archived record, if supported.
+*   **Confirmation Examples:** Confirm Order; Generate Invoice; Cancel Invoice; delete permanent records; other irreversible business actions.
 
 ### Toolbar Actions
 *   **Usage:** Actions affecting a table, list, or the overall workspace view.

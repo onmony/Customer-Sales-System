@@ -5,7 +5,7 @@ This document defines the overarching visual philosophy of the ERP application. 
 ## Core Principles
 
 ### Information-First
-The visual design must never compete with the data. The design system uses restraint—subtle borders, muted backgrounds, and clear typography—to ensure that business data is the most prominent element on any screen.
+The visual design must never compete with the data. The design system uses restraint--subtle borders, muted backgrounds, and clear typography--to ensure that business data is the most prominent element on any screen.
 
 ### Productivity-First
 Aesthetics serve functionality. Every visual decision (spacing, color, typography) is evaluated on whether it increases the speed and accuracy of a professional user.

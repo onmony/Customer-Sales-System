@@ -1,5 +1,11 @@
 # Frontend Architecture
 
+This document describes the target frontend architecture for the project.
+
+The current implementation may not yet reflect this architecture.
+
+The implementation will progressively align with this document beginning in Module 9.
+
 This document defines the overarching structural philosophy of the React frontend application. The frontend exists solely to execute the UX and Design Systems, and to interface with the backend source of truth.
 
 ## Core Principles

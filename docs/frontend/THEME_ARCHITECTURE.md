@@ -1,5 +1,11 @@
 # Theme Architecture
 
+This document describes the target frontend architecture for the project.
+
+The current implementation may not yet reflect this architecture.
+
+The implementation will progressively align with this document beginning in Module 9.
+
 The theme architecture defines how design tokens (from Module 8.4) are exposed to the React application.
 
 ## Theme Organization

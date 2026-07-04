@@ -1,5 +1,11 @@
 # Reusable Component Strategy
 
+This document describes the target frontend architecture for the project.
+
+The current implementation may not yet reflect this architecture.
+
+The implementation will progressively align with this document beginning in Module 9.
+
 To maintain scalability and visual consistency, the React application must rely heavily on a library of shared, reusable components.
 
 ## Core Principles

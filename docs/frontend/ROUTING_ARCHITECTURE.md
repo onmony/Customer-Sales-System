@@ -1,6 +1,14 @@
 # Routing Architecture
 
+This document describes the target frontend architecture for the project.
+
+The current implementation may not yet reflect this architecture.
+
+The implementation will progressively align with this document beginning in Module 9.
+
 The routing architecture dictates how users navigate through the application and how code is loaded.
+
+Router: Approved implementation will be selected during Module 9.
 
 ## Route Philosophy
 

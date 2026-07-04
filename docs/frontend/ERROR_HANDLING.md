@@ -1,5 +1,11 @@
 # Error Handling Strategy
 
+This document describes the target frontend architecture for the project.
+
+The current implementation may not yet reflect this architecture.
+
+The implementation will progressively align with this document beginning in Module 9.
+
 Error handling must strictly adhere to the UX principles defined in Module 8.2: Errors must teach, never expose technical details, and preserve user work.
 
 ## Error Categories

@@ -9,7 +9,7 @@ The software should never leave users wondering: *"What should I do next?"*
 Every workspace should naturally guide the user to the next logical business step in the process. Instead of presenting a dashboard of unrelated actions, the system should encourage the natural progression of work.
 
 **Example Flow:**
-Customer Created → Create Pricing → Create Order → Generate Invoice → Record Payment
+Customer Created -> Create Pricing -> Create Order -> Generate Invoice -> Record Payment
 
 ## Core Principles
 

@@ -8,7 +8,7 @@ For power users and data entry professionals, the keyboard is the fastest input 
 Keyboard accessibility is not an afterthought or an accessibility compliance checkbox; it is a primary design requirement for productivity.
 
 ### Power Users Stay on Keyboard
-A user should be able to complete entire workflows—from data entry to submission and navigation to the next task—without ever moving their hand to the mouse.
+A user should be able to complete entire workflows--from data entry to submission and navigation to the next task--without ever moving their hand to the mouse.
 
 ### Standard Shortcuts
 Implement universally recognized keyboard shortcuts (e.g., Enter to submit, Escape to close/cancel, Tab for navigation, Ctrl/Cmd+S to save) to leverage existing user muscle memory.

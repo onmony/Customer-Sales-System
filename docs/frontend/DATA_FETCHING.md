@@ -1,10 +1,18 @@
 # Data Fetching Strategy
 
+This document describes the target frontend architecture for the project.
+
+The current implementation may not yet reflect this architecture.
+
+The implementation will progressively align with this document beginning in Module 9.
+
 Data fetching must be robust, performant, and provide a seamless experience, minimizing loading states.
+
+Data Fetching: Approved implementation will be selected during Module 9.
 
 ## Read Strategy
 
-*   **Caching:** All GET requests for entity data (Customers, Orders) must be aggressively cached by the frontend data-fetching library.
+*   **Caching:** All GET requests for entity data (Customers, Orders) must be cached by the approved data fetching implementation. Approved implementation will be selected during Module 9.
 *   **Stale-While-Revalidate:** The UI should immediately display cached data when available, while silently fetching fresh data in the background and updating the UI upon completion. This eliminates perceived loading times for frequently visited workspaces.
 
 ## Background Refresh

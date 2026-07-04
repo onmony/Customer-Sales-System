@@ -1,5 +1,11 @@
 # Authorization Architecture
 
+This document describes the target frontend architecture for the project.
+
+The current implementation may not yet reflect this architecture.
+
+The implementation will progressively align with this document beginning in Module 9.
+
 While the backend is the absolute authority on permissions, the frontend must provide a smooth UX by respecting those permissions visually.
 
 ## Permission Philosophy
@@ -19,7 +25,7 @@ If a user lacks permission to perform an action (e.g., deleting an invoice):
 ## Route Authorization
 
 When a user attempts to navigate to a Workspace they are not authorized to view:
-1.  The Router intercepts the navigation.
+1.  The routing layer intercepts the navigation. Router: Approved implementation will be selected during Module 9.
 2.  The user is redirected to a standard "403 Forbidden" view or their default landing page.
 3.  A message is displayed explaining the lack of access.
 

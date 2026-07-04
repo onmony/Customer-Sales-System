@@ -25,7 +25,18 @@ The system must constantly communicate its status to the user. Clear, non-disrup
 *   **Notifications (Alert Center):** Persistent alerts that require review or action (e.g., "Approval required for Order #100"). Stored in a central hub.
 
 ### Confirmation Philosophy
-Minimize repetitive confirmations. Do not ask "Are you sure you want to save?" for standard actions. Reserve explicit confirmation dialogs (Modals) strictly for destructive or highly consequential actions (e.g., "Void Payment").
+Minimize repetitive confirmations. Do not ask "Are you sure you want to save?" for standard actions. Confirmation dialogs are required for irreversible or high-impact business actions.
+
+Examples requiring confirmation:
+*   Confirm Order.
+*   Generate Invoice.
+*   Cancel Invoice.
+*   Delete permanent records.
+*   Other irreversible business actions.
 
 ### Undo Philosophy
-Where technically feasible, prefer an "Undo" pattern over a confirmation prompt. For example, allowing a user to delete a row with a toast that says "Row deleted [Undo]" is faster and less disruptive than forcing them to confirm the deletion beforehand.
+Undo is preferred for reversible actions where technically feasible. Business rules determine whether an action is reversible.
+
+Examples appropriate for undo:
+*   Remove draft item.
+*   Restore recently archived record, if supported.
