@@ -2,6 +2,8 @@
 
 A "Workspace" is the defining structural concept of this ERP. It replaces the traditional concept of disconnected "screens" or "forms."
 
+Every workspace must follow [Workspace Interaction Patterns](WORKSPACE_INTERACTION_PATTERNS.md) as the standard behavior contract for user interaction.
+
 ## Business Workspace Philosophy
 
 A workspace is a dedicated environment designed to facilitate the completion of a single, cohesive business process from start to finish. 

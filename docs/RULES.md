@@ -19,6 +19,7 @@
 - Orders must contain immutable snapshots.
 - Invoices are immutable.
 - Future AI modules must be supported without redesign.
+- Every business workspace must implement the standard Workspace Interaction Patterns. New workspaces must reuse these patterns instead of inventing new interaction models.
 
 ## Ambiguity Rule
 

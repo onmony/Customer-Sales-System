@@ -21,3 +21,6 @@ The system adopts modern design principles (clean lines, logical hierarchy) but 
 
 ### Visual Consistency
 A button must look and behave identically in the Customer module as it does in the Warehouse module. Absolute visual consistency builds muscle memory and user confidence.
+
+### Workspace Accordion
+The Workspace Accordion is a permanent interaction pattern. Informational workspace sections use the standard expanded/collapsed disclosure behavior defined in [Workspace Interaction Patterns](WORKSPACE_INTERACTION_PATTERNS.md). Components must reuse this pattern instead of inventing custom expand/collapse interactions.

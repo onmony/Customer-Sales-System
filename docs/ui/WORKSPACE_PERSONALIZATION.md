@@ -37,6 +37,7 @@ The workspace may remember user preferences across multiple areas.
 *   Collapsed sections.
 *   Panel sizes.
 *   Splitter positions.
+*   Workspace Accordion state.
 
 ### Tables
 
@@ -81,6 +82,7 @@ Preferences should:
 *   Persist across devices.
 *   Be tied to the authenticated user.
 *   Never modify shared business data.
+*   Include expanded and collapsed Workspace Accordion sections as a standard capability.
 
 ## 6. Workspace Density
 

@@ -15,6 +15,7 @@ This document defines the specific roles and behaviors of panels and overlay str
 ### Right Context Panel
 *   **Role:** Supporting actor. Provides "glanceable" context without interrupting the Main Content flow.
 *   **Behavior:** Toggleable. Can be pinned open for wide screens or act as an overlay on smaller screens. Used to display related records, activity histories, or help documentation relevant to the Main Content.
+*   **Section Behavior:** Every context panel section follows the Workspace Accordion pattern defined in [Workspace Interaction Patterns](WORKSPACE_INTERACTION_PATTERNS.md). Sections may be expanded or collapsed using the same standard disclosure behavior as the main workspace.
 
 ### Bottom Status/Messages
 *   **Role:** System health and passive information.
