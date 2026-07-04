@@ -61,5 +61,26 @@ The product is organized around end-to-end customer processes (Customer → Pric
 ### Business Context First
 Users should not have to context-switch or navigate across multiple screens to understand a situation. Every screen must immediately provide the necessary context (e.g., customer status, relevant pricing) required to make confident decisions on the spot.
 
+### The Workspace Adapts to the Professional
+Professionals spend thousands of hours using the product.
+
+The system should learn and preserve how each user prefers to work.
+
+Where appropriate, workspaces should remember user preferences including:
+
+- Expanded and collapsed sections
+- Panel sizes
+- Table column widths
+- Column order
+- Sort order
+- Filters
+- Workspace density
+- Default tabs
+- Recently used actions
+
+The goal is to reduce repetitive configuration and allow every workspace to feel personally optimized.
+
+The workspace should adapt to the professional rather than forcing the professional to adapt to the workspace.
+
 ### The Software Should Disappear. The Business Should Remain.
 Our ultimate goal is to make the tool invisible. The software should reduce operational friction to zero, allowing the user to focus entirely on their customer, their team, and their business outcomes, rather than the mechanics of operating the system.

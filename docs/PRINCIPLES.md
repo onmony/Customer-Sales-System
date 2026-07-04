@@ -40,6 +40,28 @@ If a user has to understand a technical concept (versions, activation, internal 
 
 See [ADR 001: Business Actions vs System Versioning](adr/001-business-actions-vs-system-versioning.md) for detailed implementation guidance.
 
+## The Workspace Adapts to the Professional
+
+Professionals spend thousands of hours using the product.
+
+The system should learn and preserve how each user prefers to work.
+
+Where appropriate, workspaces should remember user preferences including:
+
+- Expanded and collapsed sections
+- Panel sizes
+- Table column widths
+- Column order
+- Sort order
+- Filters
+- Workspace density
+- Default tabs
+- Recently used actions
+
+The goal is to reduce repetitive configuration and allow every workspace to feel personally optimized.
+
+The workspace should adapt to the professional rather than forcing the professional to adapt to the workspace.
+
 ## Audit vs Business History
 
 **Audit (Technical History):**

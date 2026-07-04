@@ -33,3 +33,10 @@ Information entered once should seamlessly flow into subsequent steps of the wor
 
 ### System Remembers Previous Decisions Where Appropriate
 The software should learn from user behavior and remember context, applying sensible defaults based on recent actions or historical patterns to accelerate repetitive tasks.
+
+### Workspace Personalization
+The system should preserve user workspace preferences across sessions.
+
+A professional should be able to organize their workspace once and continue working that way every day.
+
+Personalization should reduce operational friction without changing business workflows.

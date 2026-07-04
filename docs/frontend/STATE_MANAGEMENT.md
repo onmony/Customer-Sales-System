@@ -36,3 +36,9 @@ Client State Management: Approved implementation will be selected during Module 
 ### 5. Workspace State
 *   **Definition:** State shared across components *within* a specific workspace, but not needed globally (e.g., selected rows in the customer table, active tabs in the customer detail view).
 *   **Ownership:** Passed via props or a workspace-specific React Context to isolate the state from the rest of the application.
+
+### 6. Workspace Preferences
+*   **Definition:** User preferences that control how a workspace is arranged or displayed for a specific user.
+*   **Ownership:** Persisted separately from business data and synchronized across devices for the same user.
+*   **Examples:** Expanded sections, panel width, table configuration, density mode, and saved filters.
+*   **Rule:** Workspace preferences must reduce repeated setup without changing business workflows or business data.
