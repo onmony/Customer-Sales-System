@@ -89,6 +89,173 @@ Examples:
 
 This rule keeps services small and maintainable as the product grows. When multiple sources need to generate the same document type (e.g., invoices from Manual Orders, WhatsApp Orders, API Orders, Imported Orders), a single Builder ensures one source of truth for document structure and construction logic.
 
+## Product Foundation Rules
+
+The Product Foundation is the highest authority for all product decisions.
+
+Every future decision must follow this hierarchy:
+
+Product Foundation
+↓
+
+UX Foundation
+↓
+
+UI Constitution
+↓
+
+Design System
+↓
+
+React Foundation
+↓
+
+Business Workspaces
+
+No UX, UI, component, workflow or feature may contradict a higher level.
+
+1.
+Every UX decision must trace back to the Product Foundation.
+
+2.
+Every UI component must trace back to the UX Foundation.
+
+3.
+Every Design System decision must support the UI Constitution.
+
+4.
+React components implement the Design System.
+They never invent new design patterns.
+
+5.
+Business Workspaces reuse approved components.
+They do not create their own design language.
+
+6.
+Whenever there is a conflict between:
+
+Customer Productivity
+
+and
+
+Visual Beauty
+
+Customer Productivity wins.
+
+7.
+Whenever there is a conflict between:
+
+Speed
+
+and
+
+Animation
+
+Speed wins.
+
+8.
+Whenever there is a conflict between:
+
+Consistency
+
+and
+
+Creativity
+
+Consistency wins.
+
+9.
+Whenever there is a conflict between:
+
+Customer Ease
+
+and
+
+Visual Design
+
+Customer Ease wins.
+
+10.
+Every automatic business decision made by the backend must be explainable in the UI.
+
+The UI must clearly communicate:
+
+- What happened
+- Why it happened
+- What business rule was applied
+- What the user can do next
+
+11.
+The application is designed for professionals who use it daily.
+
+Useful information is more valuable than decorative design.
+
+12.
+No new component may be introduced unless:
+
+- an approved component cannot be reused, or
+- the Product Foundation and UI Constitution are updated first.
+
+13.
+The Product Foundation is considered frozen.
+
+Future changes require review and explicit approval.
+
+14.
+Customer Workflow First
+
+The product is designed around complete business workflows, not software modules.
+
+Users think in terms of:
+
+Customer
+↓
+
+Pricing
+↓
+
+Order
+↓
+
+Invoice
+↓
+
+Payment
+
+—not—
+
+Tables
+
+Forms
+
+Screens
+
+Modules
+
+Every workspace must help the user complete a business process from start to finish with the fewest possible steps.
+
+Navigation, layout, and actions must follow the natural business workflow rather than the underlying technical implementation.
+
+Business modules exist for engineering. Workflows exist for customers.
+
+When there is a conflict, the workflow always wins.
+
+15.
+Business Context First
+
+Every screen must immediately answer the user's business questions.
+
+Users should not have to navigate multiple screens to understand the current business situation.
+
+Where appropriate, the UI should provide sufficient context to make confident decisions without unnecessary navigation.
+
+The goal is to reduce context switching and keep users focused on running the business rather than operating the software.
+
+For example:
+
+On an Order screen, the user should see the customer, pricing context, status, totals, and next actions without opening three other screens.
+On an Invoice screen, they should immediately understand where it came from, its status, and what needs to happen next.
+
 ## Related Documents
 
 - [MASTER_SKILL](MASTER_SKILL.md)
