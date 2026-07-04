@@ -4,6 +4,17 @@ The ERP color palette is strictly functional. Color is used to convey meaning, s
 
 ## Core Principles
 
+### Primary Brand Color
+ProOS has one Primary Brand Color.
+
+The indigo used in the Command Center is the official ProOS brand color.
+
+Do not introduce darker blue, navy, or different navigation colors in individual workspaces.
+
+Every module should immediately look like ProOS.
+
+The exact brand token must be captured in the design token system before implementation.
+
 ### Neutral Palette Philosophy
 The vast majority of the interface (backgrounds, borders, text, standard panels) must utilize a carefully graded neutral palette (grays, slates, or cool neutrals). This reduces visual noise and ensures that semantic colors (when used) immediately draw the user's attention.
 

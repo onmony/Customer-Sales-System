@@ -10,6 +10,12 @@ For a professional user, finding a specific record (customer, order, invoice) is
 ### Sidebar Remains Stable
 The primary navigational structure (typically a sidebar) must remain consistent and stable across the application. Users rely on spatial memory to locate tools; moving or hiding navigation elements disrupts this.
 
+### Application Navigation Never Changes
+Application Navigation belongs to the permanent Application Shell. It must remain the same across Customer, Pricing, Orders, Invoices, Products, Inventory, and future modules.
+
+### Workspace Directory Changes Per Workspace
+The second column is the Workspace Directory. It is not application navigation. It provides quick access to business entities inside the current workspace, such as Customer List, Pricing Sets, Order Queue, Invoice List, Product Catalog, or Inventory List.
+
 ### Predictable Navigation
 Links and buttons must clearly indicate their destination or action. The system's structure should reflect the user's mental model of the business, ensuring they always know where they are and how to get elsewhere.
 

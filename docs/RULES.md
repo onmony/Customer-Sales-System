@@ -20,6 +20,11 @@
 - Invoices are immutable.
 - Future AI modules must be supported without redesign.
 - Every business workspace must implement the standard Workspace Interaction Patterns. New workspaces must reuse these patterns instead of inventing new interaction models.
+- The Application Shell is permanent. Every workspace must inherit the same Header, Left Navigation, Search, Footer, Right Context Panel, Toolbar, Theme, Typography, and Color Palette.
+- The Workspace Directory belongs to the current workspace. It is not application navigation.
+- ProOS has one Primary Brand Color. Individual workspaces must not introduce darker or different navigation colors.
+- Customer Workspace is the design master for future workspaces. New workspaces must inherit the approved layout, navigation model, visual language, interaction patterns, shell, personalization, information density, and business-first philosophy.
+- Compress before remove. When space is limited, reduce spacing, padding, card height, optional sections, or component size before removing operationally valuable information.
 
 ## Ambiguity Rule
 

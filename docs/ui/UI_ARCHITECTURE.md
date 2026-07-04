@@ -6,14 +6,19 @@ This document defines the structural architecture of the user interface. It esta
 
 The application follows a predictable, fixed-frame architecture. The core navigational and contextual elements remain stable, while the central work area dynamically adapts to the current business process.
 
+The [Application Shell](APPLICATION_SHELL.md) is permanent. Every workspace must inherit the same Header, Left Navigation, Search, Footer, Right Context Panel, Toolbar, Theme, Typography, and Color Palette.
+
+The shell must never change between modules.
+
 ## Layout Hierarchy
 
 The UI is divided into distinct, purpose-built regions:
 
 1.  **Header (Top):** Global context and actions.
 2.  **Sidebar (Left):** Primary navigation.
-3.  **Content Area (Center):** The active workspace or page.
-4.  **Context Panel (Right):** Contextual information related to the active content.
+3.  **Workspace Directory (Second Column):** Workspace-specific access to business entities in the current workspace.
+4.  **Content Area (Center):** The active workspace or page.
+5.  **Context Panel (Right):** Contextual information related to the active content.
 
 ## Component Definitions
 
@@ -31,6 +36,12 @@ The sidebar is persistently fixed to the left edge of the screen.
 *   **Purpose:** Primary structural navigation.
 *   **Contents:** Links to major modules (Customers, Pricing, Orders, Invoices, Payments, Warehouse).
 *   **Behavior:** Remains stable to preserve spatial memory. May be collapsible to maximize the content area, but never completely hidden without user intent.
+
+### Workspace Directory
+The Workspace Directory is the second column inside the application shell.
+*   **Purpose:** Provides quick access to business entities within the current workspace.
+*   **Contents:** Workspace-specific lists or queues such as Customer List, Pricing Sets, Order Queue, Invoice List, Product Catalog, or Inventory List.
+*   **Behavior:** Changes per workspace. It is not application navigation and must not replace the stable Left Navigation.
 
 ### Content Area
 The central, largest region of the screen.

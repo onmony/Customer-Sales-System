@@ -19,6 +19,19 @@ Do not hide crucial data behind clicks, hovers, or "read more" links under the a
 ### Avoid Unnecessary Whitespace
 While breathing room is important for visual hierarchy, excessive whitespace reduces the amount of data visible without scrolling. Optimize layouts to maximize data visibility.
 
+### Compress Before Remove
+When space is constrained, reduce whitespace before removing useful business information.
+
+Preferred sequence:
+
+1. Compress spacing.
+2. Reduce padding.
+3. Reduce card height.
+4. Collapse optional sections.
+5. Resize components.
+
+Only remove information if it has no operational value.
+
 ### Avoid Information Overload
 Density does not mean chaos. Employ progressive disclosure and logical grouping to ensure that while much information is available, it is structured logically so the user can easily find what they need.
 

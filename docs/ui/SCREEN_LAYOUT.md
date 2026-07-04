@@ -2,9 +2,17 @@
 
 This document defines the internal composition of the central Content Area. While specific content varies, the structural arrangement must remain consistent to prioritize business context and readability.
 
+All screens inherit the permanent [Application Shell](APPLICATION_SHELL.md). The Header, Left Navigation, Search, Footer, Right Context Panel, Toolbar, Theme, Typography, and Color Palette remain consistent across modules.
+
 ## Structural Elements
 
 Every primary screen should be composed using the following standardized regions, stacked logically:
+
+### Workspace Directory
+*   **Location:** Second column of the Application Shell.
+*   **Purpose:** Provides quick access to business entities within the current workspace.
+*   **Contents:** Examples include Customer List, Pricing Sets, Order Queue, Invoice List, Product Catalog, and Inventory List.
+*   **Rule:** The Workspace Directory is not application navigation. It changes per workspace while the Application Shell remains permanent.
 
 ### Header (Page Level)
 *   **Location:** Top of the Content Area.

@@ -28,6 +28,11 @@ Our users are domain experts. The system should respect their knowledge and not 
 ### Reduce Operational Friction
 Identify and eliminate any unnecessary steps, clicks, or cognitive load in everyday tasks. Friction is the enemy of productivity.
 
+### Compress Before Remove
+When space is limited, preserve operationally valuable information before removing it. Compress spacing, reduce padding, reduce card height, collapse optional sections, and resize components before deciding that information should disappear.
+
+Only remove information if it has no operational value.
+
 ### Reduce Context Switching
 Provide all necessary information and tools within a single, cohesive workspace to complete a task. Switching between modules, tabs, or screens disrupts flow and increases the risk of errors.
 

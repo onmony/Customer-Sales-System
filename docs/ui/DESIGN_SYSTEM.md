@@ -22,5 +22,17 @@ The system adopts modern design principles (clean lines, logical hierarchy) but 
 ### Visual Consistency
 A button must look and behave identically in the Customer module as it does in the Warehouse module. Absolute visual consistency builds muscle memory and user confidence.
 
+### Customer Workspace as Design Master
+The Customer Workspace is the reference implementation for all future workspaces.
+
+No workspace may introduce a new layout, navigation model, visual language, or interaction pattern without updating the Design System first.
+
+Every new workspace must inherit the approved shell, navigation, toolbar, footer, typography, colors, spacing, tables, buttons, accordion behavior, workspace interaction patterns, right context panel, workspace personalization, information density, and business-first philosophy.
+
+Only the business content required for the new workspace should change.
+
+### ProOS Shell Consistency
+The Command Center defines the official ProOS Application Shell. Every module must inherit the same shell, brand color, typography, theme, toolbar, search, footer, and context panel. Individual workspaces must not introduce separate visual identities.
+
 ### Workspace Accordion
 The Workspace Accordion is a permanent interaction pattern. Informational workspace sections use the standard expanded/collapsed disclosure behavior defined in [Workspace Interaction Patterns](WORKSPACE_INTERACTION_PATTERNS.md). Components must reuse this pattern instead of inventing custom expand/collapse interactions.

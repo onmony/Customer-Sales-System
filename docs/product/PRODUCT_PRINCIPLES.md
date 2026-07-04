@@ -49,6 +49,19 @@ For high-volume, daily users, forcing them to move their hands from the keyboard
 ### Useful Information over Decorative Design
 The application is designed for professionals. Screen real estate is precious and should be heavily biased toward displaying relevant business data, context, and actionable insights rather than excessive whitespace or decorative elements.
 
+### Compress Before Remove
+Whenever space is limited, the system should preserve operationally valuable information before removing it.
+
+Apply compression in this order:
+
+- Compress spacing
+- Reduce padding
+- Reduce card height
+- Collapse optional sections
+- Resize components
+
+Only remove information if it has no operational value.
+
 ### Backend owns business decisions
 Business rules, pricing logic, and state transitions are strictly the domain of the backend. The UI is a faithful reflection of the backend's state, never the source of truth for business logic.
 
